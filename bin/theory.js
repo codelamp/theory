@@ -48,6 +48,7 @@ if (!Function.create ) {
    */
   Function.create = function(src){
     var dst = t.extend(function(){ return src.apply(this, arguments); }, src);
+    /// @TODO: this needs to be looked at, as it probably should only apply to instances??
     dst.isPrototypeOf = function(test){ return src.isPrototypeOf(test); };
     return dst;
   };

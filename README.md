@@ -1,12 +1,3 @@
-<nav id="theory">
-  <div class="center">
-    <a href="#objecttheory" class="objectTheory"><img src="images/bubble-objecttheory.png" height="147" border="0" width="216"></a>
-    <a href="#stringtheory" class="stringTheory"><img src="images/bubble-stringtheory.png" height="147" border="0" width="216"></a>
-  </div>
-</nav>
-
----
-
 ## Why theory.js
 
 This library pretty much culminated itself from different theories I had about how to approach constructing and navigating objects in JavaScript.
@@ -99,7 +90,7 @@ It should be noted that `t.string` cannot, and will not, attempt to compete &mda
 ... Unfortunately is still under development at the moment.
 
 <script>
-(function(titles){
+document.querySelectorAll && (function(titles){
   var text;
   var strip = function(html){
     var container = document.createElement('div');
@@ -114,4 +105,15 @@ It should be noted that `t.string` cannot, and will not, attempt to compete &mda
     titles[i].setAttribute('id', text);
   }
 })(document.querySelectorAll('h1,h2,h3,h4,h5,h6'));
+document.body && (function(elm){
+  elm.innerHTML = [
+    '<nav id="theory">',
+      '<div class="center">',
+        '<a href="#objecttheory" class="objectTheory"><img src="images/bubble-objecttheory.png" height="147" border="0" width="216"></a>',
+        '<a href="#stringtheory" class="stringTheory"><img src="images/bubble-stringtheory.png" height="147" border="0" width="216"></a>',
+      '</div>',
+    '</nav>',
+    '<hr >'
+  ].join("\n") + elm.innerHTML;
+})(document.getElementById('readme'));
 </script>

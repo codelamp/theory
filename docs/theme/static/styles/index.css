@@ -1,0 +1,153 @@
+body, html { padding: 0; margin: 0; background: #ffffff; height: 100%; }
+body {
+  background: url(../images/skyglobe_x2000.jpg) no-repeat center 80px;
+  -o-background-size: 100% 30%;
+  -webkit-background-size: 100% 30%;
+  -khtml-background-size: 100% 30%;
+  -moz-background-size: 100% 30%;
+}
+
+
+nav#theory {
+  text-align: center;
+  position: relative;
+  margin-top: 100px;
+  display: block;
+}
+
+nav#theory .center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+nav#theory a {
+  position: relative;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  width: 216px;
+  height: 147px;
+  overflow: hidden;
+  font-size: 147px;
+  display: inline;
+  display: inline-block;
+}
+
+nav#theory a img {
+  visibility: hidden;
+}
+
+nav#theory a.eventTheory { background: url(../images/bubble-eventtheory.png) no-repeat top left; }
+nav#theory a.arrayTheory { background: url(../images/bubble-arraytheory.png) no-repeat top left; }
+nav#theory a.objectTheory { background: url(../images/bubble-objecttheory.png) no-repeat top left; }
+nav#theory a.stringTheory { background: url(../images/bubble-stringtheory.png) no-repeat top left; }
+
+nav#theory a.eventTheory:hover, nav#theory a.eventTheory:focus { background: url(../images/bubble-eventtheory-z.png) no-repeat top left; }
+nav#theory a.arrayTheory:hover, nav#theory a.arrayTheory:focus { background: url(../images/bubble-arraytheory-z.png) no-repeat top left; }
+nav#theory a.objectTheory:hover, nav#theory a.objectTheory:focus { background: url(../images/bubble-objecttheory-z.png) no-repeat top left; }
+nav#theory a.stringTheory:hover, nav#theory a.stringTheory:focus { background: url(../images/bubble-stringtheory-z.png) no-repeat top left; }
+
+nav#theory a:nth-child(2), nav#theory a:nth-child(3) {
+  top: -10px;
+}
+
+nav#theory a:hover, nav#theory a:focus {
+  -webkit-transform: translate(0px,-10px);
+  -moz-transform: translate(0px,-10px);
+  -o-transform: translate(0px,-10px);
+  -ms-transform: translate(0px,-10px);
+  transform: translate(0px,-10px);
+  outline: 0px;
+}
+
+nav#theory a:target {
+  /*
+  -webkit-transform: scale(1.1,1.1);
+  -moz-transform: scale(1.1,1.1);
+  -o-transform: scale(1.1,1.1);
+  -ms-transform: scale(1.1,1.1);
+  transform: scale(1.1,1.1);
+  */
+  z-index:1;
+}
+
+#main {
+  width: 80%;
+}
+
+/*
+section {
+  margin-top: 160px;
+  margin-bottom: 160px;
+}
+
+section#sectionEvent {
+  
+}
+
+.page-block {
+  position: relative;
+  margin: 0 auto;
+  clear: both;
+  width: 80%;
+  text-align: center;
+}
+
+.copy-block {
+  font-family: 
+    'HelveticaNeue-Light',
+    'Helvetica Neue Light',
+    'Helvetica Neue',
+    Helvetica, 
+    Arial,
+    sans-serif;
+  font-weight: 400;
+  letter-spacing: 0px;
+  line-height: 1.2em;
+  font-size: 0.95em;
+  color: #000000;
+  text-align: left;
+  max-width: 600px;
+}
+
+.copy-block h4 {
+  font-weight: normal;
+  letter-spacing: 1px;
+  line-height: 1.2em;
+  font-size: 0.95em;
+}
+
+.copy-block h1, .copy-block h3 {
+  font-weight: normal;
+  letter-spacing: 1px;
+  line-height: 2em;
+  font-size: 2em;
+  color: #ffba00;
+}
+
+.blog-block h3 {
+  color: #ffffff;
+  font-weight: normal;
+  letter-spacing: 1px;
+  line-height: 1.2em;
+  font-size: 0.95em;
+  color: #ffba00;
+}
+
+code {
+  display: block;
+  margin: 20px;
+}
+
+code .output {
+  color: blue;
+  font-style: italic;
+}
+
+code .comment {
+  color: gray;
+  font-style: italic;
+}
+*/

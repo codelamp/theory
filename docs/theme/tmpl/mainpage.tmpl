@@ -1,0 +1,14 @@
+<?js
+var data = obj;
+var self = this;
+?>
+
+<?js if (data.kind === 'package') { ?>
+  <h2 style="font-size: 16px; font-weight: normal; margin: 0 0 0 24px;">Create, navigate, and augment structures &mdash; with ease.</h2>
+<?js } ?>
+
+<?js if (data.readme) { ?>
+    <section id="readme">
+        <article><?js= data.readme ?></article>
+    </section>
+<?js } ?>

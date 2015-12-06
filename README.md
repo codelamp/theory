@@ -10,7 +10,9 @@ If you have an object that describes a behaviour, it forces you to break that be
 
 Keeping complex behaviour as descriptions also allows them to be more easily extended, exported or re-interpreted.
 
-This library is still — as ever — a work in progress (and has been since 2009, don't worry it has been rewritten a number of times since then). I have committed this codebase just to give an example of my recent JavaScript development. **Watch this space for new commits shortly :)**
+This library is still — as ever — a work in progress (and has been since 2009, don't worry it has been rewritten a number of times since then). I have committed this codebase just to give an example of my recent JavaScript development.
+
+**Watch this space for new commits shortly :)**
 
 ---
 

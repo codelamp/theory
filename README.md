@@ -22,7 +22,7 @@ String Theory &mdash; unlike its scientific namesake &mdash; has nothing to do w
 
 An example of `theory.string()` in use would be when using {@linkcode theory.navigate t.navigate}.
 
-    t.navigate(myObject).select('c/^e/($keyContains f)');
+    t.navigate(myObject).select('firstKey/^keyStartsWith/($keyContains this)');
 
 The path notation used above is parsed using String Theory. The parsing generates an internal object structure that is then used to navigate an Object structure.
 
@@ -30,7 +30,7 @@ The path notation used above is parsed using String Theory. The parsing generate
 
 Parsers are created by providing instruction sets for {@linkcode theory.string t.string} to use. Here is an cut-down set for parsing Theory's method overload keys:
 
-    theory.string.instructions('t-key', {
+    theory.string.instructions('theory-overload-keys', {
       'default': {
         content: [
           { ranges: ['squareOptional', 'square'] }
@@ -76,6 +76,8 @@ For example, taking the string `[object, number, function] [object]?` the steps 
 6. For the `square`, scan for a divide of "," &mdash; each divide makes an `item`.
 7. For the `squareOptional`, do the same as for `square`.
 8. The resulting object *(simplified here for brevity)* would be `[['object', 'number', 'function'], ' ', ['object']]`.
+
+Whilst to achieve the above seems quite simple, the code behind it is quite complex. This is because each specific operation takes into account the fact that tokens may be escaped, or within sub ranges... it is not just as simple as using `.indexOf` and `.split`.
 
 > NOTE: For now only string tokens are supported, but the future should see Regular Expressions and ES6 support for string tokens.
 

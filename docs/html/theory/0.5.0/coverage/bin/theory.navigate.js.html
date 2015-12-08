@@ -1,0 +1,1370 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for bin/theory.navigate.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">bin/</a> theory.navigate.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">66.89% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>99/148</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">68.91% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>82/119</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">61.29% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>19/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">67.38% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>95/141</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+&nbsp;
+<span class="missing-if-branch" title="if path not taken" >I</span>if ( typeof theory === 'undefined' ) {
+<span class="cstat-no" title="statement not covered" >  throw new Error('You must load theory.js first.');</span>
+}
+&nbsp;
+/*
+ * Theory's navigate handling -- allows for navigation around object structures
+ * in a similar way to jQuery.
+ *
+ * @module theory
+ * @class t.navigate
+ */
+t.internal.navigate = t.creator({
+  
+  theory: {
+    prep: function(){
+      this.shared.empty = this.create();
+    },
+    requirements: [
+<span class="fstat-no" title="function not covered" >      function needIsJs(){</span> <span class="cstat-no" title="statement not covered" >return typeof is != 'undefined' || new Error('This code requires is.js to be included.'); </span>}
+    ]
+  },
+  
+  /*
+   * .shared is reserved for attributes that require a shared instance
+   * between instances of t.navigate(). By default methods are already shared.
+   */
+  shared: {
+    simpleSelector: /^[a-z0-9 _.-]+$|^\*$/i,
+    lispSelector: /^\(\$\w+/i,
+    segmentedSelector: /\//,
+    endsWithSelector: /(^[^\/]+\$$)|(^\*[^\/]+$)/,
+    startsWithSelector: /(^\^[^\/]+$)|(^[^\/]+\*$)/,
+    empty: null
+  },
+  
+  /*
+   * .i is reserved for internal data that is unique to this instance
+   */
+  i: {
+    hasChildren: <span class="fstat-no" title="function not covered" >function(target){</span>
+<span class="cstat-no" title="statement not covered" >      for ( var i in target ) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      return false;</span>
+    },
+    children: function(target, filter){
+      return (is.literalObject(target) &amp;&amp; Object.values(target, filter)) || [];
+    },
+    hasParent: <span class="fstat-no" title="function not covered" >function(target){</span>
+<span class="cstat-no" title="statement not covered" >      return !!(target &amp;&amp; target.parent);</span>
+    },
+    parent: <span class="fstat-no" title="function not covered" >function(target, filter){</span>
+<span class="cstat-no" title="statement not covered" >      if ( target.parent ) {</span>
+<span class="cstat-no" title="statement not covered" >        if ( target.parent.call ) {</span>
+<span class="cstat-no" title="statement not covered" >          return [target.parent()];</span>
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >          return [target.parent];</span>
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      return [];</span>
+    },
+    needsResolving: function(target){
+      return false;
+    },
+    resolve: <span class="fstat-no" title="function not covered" >function(target){</span>
+      /// @TODO: theory needs to utilise Promises
+<span class="cstat-no" title="statement not covered" >      return t.promise().resolve(target);</span>
+    }
+  },
+  
+  /*
+   * Return a new configuration of t.navigate().
+   * This can be used to create a version that operates slightly differently.
+   *
+   * @TODO: this should be handled using t.creator.namespace
+   */
+  configuration: function(config){
+    var obj = this.create();
+    if ( config ) {
+      config.hasChildren    &amp;&amp; (obj.i.hasChildren    = config.hasChildren);
+      config.children       &amp;&amp; (obj.i.children       = config.children);
+      config.hasParent      &amp;&amp; (obj.i.hasParent      = config.hasParent);
+      config.parent         &amp;&amp; (obj.i.parent         = config.parent);
+      config.needsResolving &amp;&amp; (obj.i.needsResolving = config.needsResolving);
+      config.resolve        &amp;&amp; (obj.i.resolve        = config.resolve);
+    }
+    var caller = function(){ return obj.create.apply(obj, arguments); };
+        caller.configuration = function(){
+          return obj.configuration.apply(obj, arguments);
+        };
+    return caller;
+  },
+  
+  /*
+   * Create a new instance of `t.navigate()`
+   *
+   * @static
+   * @method t.navigate.create
+   * @param target {Object} The target object to navigate
+   * @param [options] {Object} Configuration options
+   * @param [options.parents] {Boolean} Enable automatic `t.navigate.applyParents` to target
+   * @return {Object} an instance of `t.navigate`
+   * @chainable
+   */
+  create: function(target, options){
+    var ret = this.prep.apply(Object.create(this), arguments);
+    ret.i.memories = Object.create(this.i.memories || {});
+    return ret;
+  },
+  
+  /*
+   * Prep the new instance with references unique only to this instance.
+   * leave everything else shared. This is automatically called by `.create()`
+   *
+   * @method prep
+   * @param {Object} target
+   * @param {Object} [options]
+   * @return {Object} an instance of `t.navigate`
+   * @chainable
+   */
+  prep: function(target, options){
+    this.i = Object.create(this.i);
+    this.i.targets = [];
+    target &amp;&amp; options &amp;&amp; options.parents &amp;&amp; (target = this.applyParents(target));
+    target &amp;&amp; (this.i.targets.push(target));
+    return this;
+  },
+  
+  /*
+   * Recursively step an object structure and apply parent references
+   * This is rather awkward when it comes to plain JS Objects, however,
+   * for other data structures that already have parent references -- this
+   * step won't be required -- .parent() will just work.
+   *
+   * @static
+   * @method t.navigate.applyParents
+   * @param obj {Object} The object to apply the parents to.
+   * @param [maxDepth=100] {Number} To avoid possible circular loops.
+   * @param [depth=0] {Number} Internal parameter to keep track of recursion depth.
+   * @param [parent] {Function} Internal parameter for passing on the parent ref to recursed children.
+   * @return {Object} the original object that was passed in (unless it was a primitive, in which case `t.promotePrimitive(obj)` is returned instead.
+   */
+  applyParents: function(obj, maxDepth, depth, parent){
+    if ( !depth ) depth = 0;
+    if ( !maxDepth ) maxDepth = 100; /// just in case
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ( depth &gt; maxDepth ) <span class="cstat-no" title="statement not covered" >return obj;</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ( !obj || obj.parent ) <span class="cstat-no" title="statement not covered" >return obj;</span>
+    /// support being called directly with a primative
+    if ( is.primitive(obj) ) {
+      obj = t.promotePrimitive(obj);
+      parent &amp;&amp; (obj.parent = parent);
+    }
+    else {
+      parent &amp;&amp; (obj.parent = parent);
+      var key, ref = this.createParentRef(obj);
+      for ( key in obj ) {
+        if ( key !== 'parent' &amp;&amp; (!Object.prototype.hasOwnProperty || Object.prototype.hasOwnProperty.call(obj, key)) ) {
+          obj[key] = this.applyParents(obj[key], maxDepth, depth + 1, ref);
+        }
+      }
+    }
+    return obj;
+  },
+  
+  /*
+   * Keep references to parents in closures to keep data exports clean
+   *
+   * @TODO: upgrade this to using Symbols with ES6
+   */
+  createParentRef: function(parent){
+    return <span class="fstat-no" title="function not covered" >function(){<span class="cstat-no" title="statement not covered" ></span>return parent;}</span>;
+  },
+  
+  /*
+   * Similar to jQuery's pushStack -- allows the addition of new targets
+   *
+   * @method pushStack
+   * @param {Array} items
+   * @return {Object} the current instance of `t.navigate`
+   * @chainable
+   */
+  pushStack: function(items){
+    for ( var i=0, a=items, l=a.length, item; i&lt;l; i++ ) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if ( (item=a[i]) ) {
+        this.i.targets.push(item);
+        if ( this.i.needsResolving(item) ) {
+          if ( !this.i.resolving ) { this.i.resolving = []; }
+          this.i.resolving[i] = this.i.resolve(item);
+        }
+      }
+    }
+    return this;
+  },
+  
+  /*
+   * Navigate an object's children, that are found using the 
+   * internal children function. This defaults to looking for
+   * an array under the key of "children".
+   *
+   * @example
+   *
+   * #### Simple usage:
+   *
+   *     t.navigate({children:[{a:1}, {b:2}, {c:3}]).children();
+   *
+   * #### Filter callback example:
+   *
+   *     t.navigate({children:[{a:1}, {b:2}, {c:3}]).children(function(key, val){
+   *       return !!val.a;
+   *     });
+   *
+   * @method children
+   * @param {Array|String|Function} filter Filter in the children that will be matched, using either a string selector, a callback function or an array of either.
+   * @return {Object} a new instance of `t.navigate`, containing matched children
+   * @chainable
+   */
+  children: function(filter){
+    var ret = this.create();
+    for ( var i=0, a=this.i.targets, l=a.length; i&lt;l; i++ ) {
+      ret.pushStack( this.i.children(a[i], filter) );
+    };
+    return ret;
+  },
+  
+  /*
+   * Treat an object's keyed items as children. It will only navigate
+   * down inside items that are objects.
+   */
+  each: function(callback){
+    for ( var i=0, a=this.i.targets, l=a.length, item; i&lt;l; i++ ) {
+      item = a[i];
+      <span class="missing-if-branch" title="else path not taken" >E</span>if ( item &amp;&amp; item.original ) { /// @TODO: is this a good idea?
+        item = item.original;
+      }
+      callback &amp;&amp; callback.call &amp;&amp; callback.call(this, item, i);
+    };
+    return this;
+  },
+  
+  /*
+   * Remember a state accessible to all derived navigate objects
+   */
+  rem: <span class="fstat-no" title="function not covered" >function(name){</span>
+<span class="cstat-no" title="statement not covered" >    name = name || 'default';</span>
+<span class="cstat-no" title="statement not covered" >    this.i.memories[name] = this;</span>
+<span class="cstat-no" title="statement not covered" >    return this;</span>
+  },
+  
+  /*
+   * Recall a remembered state
+   */
+  rec: <span class="fstat-no" title="function not covered" >function(name){</span>
+<span class="cstat-no" title="statement not covered" >    name = name || 'default';</span>
+<span class="cstat-no" title="statement not covered" >    if ( this.i.memories &amp;&amp; this.i.memories[name] ) {</span>
+<span class="cstat-no" title="statement not covered" >      return this.i.memories[name];</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >      return null;</span>
+    }
+  },
+  
+  /*
+   * From the current selection, move up the object structure
+   *
+   * @NOTE: This can only work if the object structure you are navigating
+   * has a reference stored back up to the parent.
+   */
+  parent: <span class="fstat-no" title="function not covered" >function(filter){</span>
+<span class="cstat-no" title="statement not covered" >    var ret = this.create();</span>
+<span class="cstat-no" title="statement not covered" >    for ( var i=0, a=this.i.targets, l=a.length; i&lt;l; i++ ) {</span>
+<span class="cstat-no" title="statement not covered" >      ret.pushStack( this.i.parent(a[i], filter) );</span>
+    };
+<span class="cstat-no" title="statement not covered" >    return ret;</span>
+  },
+  
+  /*
+   * List out the keys per each selected/targeted object
+   */
+  getKeys: <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >    var ret = [];</span>
+<span class="cstat-no" title="statement not covered" >    for ( var i=0, a=this.i.targets, l=a.length; i&lt;l; i++ ) {</span>
+<span class="cstat-no" title="statement not covered" >      ret = ret.concat(Object.keys(a[i]));</span>
+    };
+<span class="cstat-no" title="statement not covered" >    return ret;</span>
+  },
+  
+  /*
+   * This method expects a selector in Object Path Notation.
+   */
+  select: function(opn, hint){
+    var ret = this.shared.empty; /// @TODO: Should this.shared.empty be cloned?
+    /// support for opn segments passed directly
+    if ( is.literalObject( opn ) &amp;&amp; opn.type ) {
+      switch ( opn.type ) {
+        case 'segment':
+          ret = this.select(opn.string, opn);
+        break;
+      }
+    }
+    /// support for simple keyword selects
+    else if ( opn === '' || this.shared.simpleSelector.test(opn) ) {
+      switch ( opn ) {
+        /// the "you didn't mean to end with slash" selector
+<span class="branch-0 cbranch-no" title="branch not covered" >        case '':</span>
+<span class="cstat-no" title="statement not covered" >          return this;</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+        /// wildcard filter
+<span class="branch-1 cbranch-no" title="branch not covered" >        case '*':</span>
+<span class="cstat-no" title="statement not covered" >          ret = this.children();</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+        /// parent filter
+<span class="branch-2 cbranch-no" title="branch not covered" >        case '..':</span>
+<span class="cstat-no" title="statement not covered" >          ret = this.parent();</span>
+<span class="cstat-no" title="statement not covered" >        break;</span>
+        /// otherwise assume child filter
+        default:
+          ret = this.children(opn);
+        break;
+      }
+      return ret;
+    }
+    /// support for partial selectors, these aren't handled by OPN
+    /// and so should be detected by the navigation code.
+    else if ( this.shared.startsWithSelector.test(opn) ) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if ( opn.indexOf('*') !== -1 ) {
+<span class="cstat-no" title="statement not covered" >        opn = opn.substring(0, opn.length-1);</span>
+      }
+      else <span class="missing-if-branch" title="else path not taken" >E</span>if ( opn.charAt(0) === '^' ) {
+        opn = opn.substring(1, opn.length);
+      }
+      else {
+<span class="cstat-no" title="statement not covered" >        opn = null;</span>
+      }
+      <span class="missing-if-branch" title="else path not taken" >E</span>if ( opn ) {
+        return this.children(function(key, val){
+          return key.indexOf(opn) === 0;
+        });
+      }
+    }
+    /// support for partial selectors, these aren't handled by OPN
+    /// and so should be detected by the navigation code.
+    else <span class="missing-if-branch" title="if path not taken" >I</span>if ( this.shared.endsWithSelector.test(opn) ) {
+<span class="cstat-no" title="statement not covered" >      if ( opn.charAt(0) === '*' ) {</span>
+<span class="cstat-no" title="statement not covered" >        opn = opn.substring(1, opn.length);</span>
+      }
+      else <span class="cstat-no" title="statement not covered" >if ( opn.indexOf('$') !== -1 ) { /// @TODO: should be more accurate</span>
+<span class="cstat-no" title="statement not covered" >        opn = opn.substring(0, opn.length-1);</span>
+      }
+      else {
+<span class="cstat-no" title="statement not covered" >        opn = null;</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if ( opn ) {</span>
+<span class="cstat-no" title="statement not covered" >        return this.children(<span class="fstat-no" title="function not covered" >function(key, val){</span></span>
+<span class="cstat-no" title="statement not covered" >          return key.indexOf(opn) === 0;</span>
+        });
+      }
+    }
+    /// support for functional selectors like ($keyContains ...)
+    /// @TODO: Currently t.string() doesn't support the ability to describe
+    /// a child group when there is no division. This means that ($key) can
+    /// not be fully parsed down to (, $key, ) -- whereas ($key ...) is fine
+    /// because it has a " " divider. For now lisp selectors will always
+    /// require an argument -- which is likely to be the operational case
+    /// anyway.
+    else if ( this.shared.lispSelector.test(opn) ) {
+      var name, func, args, kids = t.step(hint, 'children', 0, 'children', 0);
+      switch ( kids.type ) {
+        case 'spaces':
+          <span class="missing-if-branch" title="else path not taken" >E</span>if ( (args = kids &amp;&amp; kids.children) ) {
+            name = t.opn.wrap(args.shift()).string();
+            func = t.step(t.internal.object, 'selectors', name);
+            <span class="missing-if-branch" title="else path not taken" >E</span>if ( func ) {
+              args = t.opn.wrap(args).strings();
+              return func.apply(this, args);
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >              return t.error(Error('Unknown selector function ' + name));</span>
+            }
+          }
+<span class="cstat-no" title="statement not covered" >        break;</span>
+      }
+    }
+    else {
+      var notation = t.opn(opn),
+          segments = notation.segments(),
+          head = this,
+          segment
+      ;
+      while ( +head &amp;&amp; (segment=segments.next()) ) {
+        head = head.select( segment );
+      }
+      ret = head;
+    }
+    return ret;
+  },
+  
+  get: function(){
+    return this.i.targets;
+  },
+  
+  /*
+   * Simple little hack to allow this object to existence check with a simple number cast
+   */
+  valueOf: function(){
+    return this.i.targets.length ? 1 : <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+  }
+  
+  /// @TODO: map would be useful!
+  
+});
+&nbsp;
+/*
+ * Set up some object selectors to improve t.object().select() support
+ */
+t.internal.object.selectors['$wildcardKey'] = t.method({
+  method: <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >    console.log(this, arguments);</span>
+  }
+});
+&nbsp;
+/*
+ * Filter children based on a "contains" partial key.
+ */
+t.internal.object.selectors['$keyContains'] = t.method({
+  method: function(filter){
+    return this.children(function(key, val){
+      return key.indexOf(filter) !== -1;
+    });
+  }
+});
+&nbsp;
+/// one instance that navigates normal objects
+t.object.navigate = t.navigate = t.internal.navigate.configuration();</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 08 2015 11:33:41 GMT+0000 (GMT)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

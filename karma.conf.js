@@ -37,6 +37,11 @@ module.exports = function(config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress', 'coverage'],
 
+    // specify a coverage output directory
+    coverageReporter: {
+      dir: 'docs/html/theory/0.5.0/coverage',
+      subdir: '.'
+    },
 
     // web server port
     port: 9876,
@@ -62,7 +67,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultanous

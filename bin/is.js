@@ -31,23 +31,76 @@ var has = {
 };
 
 /**
- * Cast one thing to another
+ * A simple place to store code that casts or converts from one thing to another.
  *
  * @namespace to
  */
 var to = {
   
+  /**
+   * Cast "anything" to an array.
+   *
+   * Makes use of modern approaches where possible i.e. `Array.isArray` and `Array.from`.
+   *
+   * Falls back to `Array.prototype.slice.call`.
+   *
+   * @example
+   * to.array();          // []
+   * to.array(123);       // [123]
+   * to.array([123]);     // [123]
+   * to.array('123');     // ['1', '2', '3']
+   * to.array(arguments); // [arguments[0], arguments[1], arguments[2]]
+   *
+   * @memberof! to
+   * @method
+   * @param {any} param - if param is already an array, it is just returned, anything else that can be converted is; anything else is just wrapped.
+   * @return {array}
+   */
   array: function(param){
-    if ( Array.isArray ) {
-      if ( Array.isArray(param) ) {
-        return param;
+    if ( param ) {
+      /// check for array type first to short-circuit: modern first, then old-school
+      if ( Array.isArray ) {
+        if ( Array.isArray(param) ) {
+          return param;
+        }
+      }
+      else {
+        if ( param.join ) {
+          return param;
+        }
+      }
+      /// as long as we have a length property, use casting: modern first, then old-school
+      if ( param && typeof param.length != 'undefined' ) {
+        if ( Array.from ) {
+          return Array.from(param);
+        }
+        else {
+          return Array.prototype.slice.call(param, 0);
+        }
       }
     }
-    if ( Array.from ) {
-      return Array.from(param);
+    /// otherwise, wrap the value as an array
+    return arguments.length ? [param] : [];
+  },
+  
+  /**
+   * Convert "anything" to a function
+   *
+   * @example
+   * to.function(function(){}); // function(){} <-- same ref
+   * to.function(123);          // function(){ return param; } <-- param = 123
+   *
+   * @memberof! to
+   * @method
+   * @param {any} param - if param is already a function, it is just returned, anything else is wrapped as a function.
+   * @return {function}
+   */
+  "function": function(param){
+    if ( param && param.call && param.apply ) {
+      return param;
     }
     else {
-      return Array.prototype.slice.call(param, 0);
+      return function(){ return param; };
     }
   }
   
@@ -55,6 +108,13 @@ var to = {
 
 /**
  * Check that stuff is what it should be, or perhaps not what it isn't.
+ *
+ *     if ( is.string(randomVariable) ) {
+ *       /// do something here?
+ *     }
+ *     else if ( is.not.array(randomVariable) ) {
+ *       /// do something else?
+ *     }
  *
  * The current definition of "is" methods are integral to theory.js. You 
  * can change their behaviour but this may cause theory code to do strange 
@@ -65,23 +125,32 @@ var to = {
  * to be used by external code. The way items are identified can be
  * changed without causing internal theory issues.
  *
- *     if ( is.string(randomVariable) ) {
- *       /// do something here?
+ *     if ( is.what.type(randomVariable, 'string' ) {
+ *       /// you can change how string is compared by redefining the `is.what.types` array
  *     }
  *
+ * Obviously, it is unlikely that you would alter or even use `is.what.type` 
+ * for simple types -- you may as well use `is.string`.
+ *
+ * However `is.what.type` can be extended to cater for any type detection.
+ *
+ * ##### TODOs
+ * 1. introduce namespacing to `is` so that separate code in the same environment cannot intefere.
+ *
  * @namespace is
+ * @todo: introduce namespacing to `is` so that separate code in the same environment cannot intefere.
  */
 var is = (function( undefined ){
   
   var is = {
   
     /**
-     * Check that an item quacks like an array
+     * Check that an item quacks like an array.
      *
      * @static
      * @method is.array
      * @param {any} item
-     * @return {Boolean} returns true if item has .join method
+     * @return {Boolean} returns true if item has `.join` method
      */
     array: function(item){
       return (item && item.join) ? true : false;
@@ -101,13 +170,16 @@ var is = (function( undefined ){
      *
      * @method is.arraylike
      * @param {any} item
-     * @return {Boolean} returns true if item has `.join` method
+     * @return {Boolean} returns true if item has `.length` and `[0]`, or `is.array()`, or `is.arguments()`
      */
     arraylike: function(item){
-      return ((item && item.length && item[0]) || is.array(item) || is.arguments(item)) ? true : false;
+      return ((item && item.length && typeof item[0] !== 'undefined')
+        || is.array(item)
+        || is.arguments(item))
+      ? true : false;
     },
     /**
-     * Check that an item is an `Arguments` object
+     * Check that an item is an `Arguments` object.
      *
      * @static
      * @method is.arguments
@@ -119,7 +191,7 @@ var is = (function( undefined ){
       return item && is.number(item.length) && (Object.prototype.toString.call(item) === '[object Arguments]') ? true : false;
     },
     /**
-     * Check that an item quacks like a string
+     * Check that an item quacks like a string.
      *
      * @static
      * @method is.string
@@ -130,7 +202,7 @@ var is = (function( undefined ){
       return (typeof item != 'undefined' && item.charAt) ? true : false;
     },
     /**
-     * Check that an item reports as a number
+     * Check that an item reports as a number.
      *
      * @static
      * @method is.number
@@ -141,7 +213,7 @@ var is = (function( undefined ){
       return ((typeof item == 'number') || (item && item.constructor === Number)) ? true : false;
     },
     /**
-     * Check that an item reports as a boolean
+     * Check that an item reports as a boolean.
      *
      * @static
      * @method is.bool
@@ -175,7 +247,7 @@ var is = (function( undefined ){
       return (typeof item === 'object');
     },
     /**
-     * Check that an item is callable
+     * Check that an item is callable.
      *
      * @static
      * @method is.callable
@@ -186,7 +258,7 @@ var is = (function( undefined ){
       return (item && item.call && item.apply) ? true : false;
     },
     /**
-     * Check that an item quacks like an element
+     * Check that an item quacks like an element.
      *
      * @static
      * @method is.element
@@ -222,7 +294,7 @@ var is = (function( undefined ){
       return item !== undefined;
     },
     /**
-     * Check that an item quacks like a promise
+     * Check that an item quacks like a promise.
      *
      * @static
      * @method is.promise
@@ -242,7 +314,7 @@ var is = (function( undefined ){
       return item === null;
     },
     /**
-     * Check that item is a range of null values
+     * Check that item is a range of null values.
      *
      * @static
      * @method is.void

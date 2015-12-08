@@ -46,16 +46,26 @@
     
         
             <div class="description"><p>Check that stuff is what it should be, or perhaps not what it isn't.</p>
-<p>The current definition of &quot;is&quot; methods are integral to theory.js. You 
+<pre class="prettyprint source"><code>if ( is.string(randomVariable) ) {
+  /// do something here?
+}
+else if ( is.not.array(randomVariable) ) {
+  /// do something else?
+}</code></pre><p>The current definition of &quot;is&quot; methods are integral to theory.js. You 
 can change their behaviour but this may cause theory code to do strange 
 and unimaginable things &mdash; it could also just cause it to error and throw 
 wobblies all the time too.</p>
 <p>This is the reason for <code>is.what.type()</code> &mdash; this is a system designed
 to be used by external code. The way items are identified can be
 changed without causing internal theory issues.</p>
-<pre class="prettyprint source"><code>if ( is.string(randomVariable) ) {
-  /// do something here?
-}</code></pre></div>
+<pre class="prettyprint source"><code>if ( is.what.type(randomVariable, 'string' ) {
+  /// you can change how string is compared by redefining the `is.what.types` array
+}</code></pre><p>Obviously, it is unlikely that you would alter or even use <code>is.what.type</code> 
+for simple types &mdash; you may as well use <code>is.string</code>.</p>
+<p>However <code>is.what.type</code> can be extended to cater for any type detection.</p>
+<h5>TODOs</h5><ol>
+<li>introduce namespacing to <code>is</code> so that separate code in the same environment cannot intefere.</li>
+</ol></div>
         
 
         
@@ -92,7 +102,7 @@ changed without causing internal theory issues.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line56">line 56</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -134,7 +144,7 @@ changed without causing internal theory issues.</p>
 
 
 <div class="description">
-    <p>Check that an item quacks like an array</p>
+    <p>Check that an item quacks like an array.</p>
 </div>
 
 
@@ -238,7 +248,7 @@ changed without causing internal theory issues.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line78">line 78</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line147">line 147</a>
     </li></ul></dd>
     
 
@@ -272,7 +282,7 @@ changed without causing internal theory issues.</p>
 
 
   
-  <p>returns true if item has .join method</p>
+  <p>returns true if item has <code>.join</code> method</p>
 </div>
 
     
@@ -402,7 +412,7 @@ array-likes, e.g. node lists.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line89">line 89</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -436,7 +446,7 @@ array-likes, e.g. node lists.</p>
 
 
   
-  <p>returns true if item has <code>.join</code> method</p>
+  <p>returns true if item has <code>.length</code> and <code>[0]</code>, or <code>is.array()</code>, or <code>is.arguments()</code></p>
 </div>
 
     
@@ -454,7 +464,7 @@ array-likes, e.g. node lists.</p>
 
 
 <div class="description">
-    <p>Check that an item is an <code>Arguments</code> object</p>
+    <p>Check that an item is an <code>Arguments</code> object.</p>
 </div>
 
 
@@ -558,7 +568,7 @@ array-likes, e.g. node lists.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line109">line 109</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line181">line 181</a>
     </li></ul></dd>
     
 
@@ -611,7 +621,7 @@ as <code>[object Arguments]</code> when <code>.toString()-ed</code>.</p>
 
 
 <div class="description">
-    <p>Check that an item quacks like a string</p>
+    <p>Check that an item quacks like a string.</p>
 </div>
 
 
@@ -715,7 +725,7 @@ as <code>[object Arguments]</code> when <code>.toString()-ed</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line121">line 121</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line193">line 193</a>
     </li></ul></dd>
     
 
@@ -767,7 +777,7 @@ as <code>[object Arguments]</code> when <code>.toString()-ed</code>.</p>
 
 
 <div class="description">
-    <p>Check that an item reports as a number</p>
+    <p>Check that an item reports as a number.</p>
 </div>
 
 
@@ -871,7 +881,7 @@ as <code>[object Arguments]</code> when <code>.toString()-ed</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line132">line 132</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line204">line 204</a>
     </li></ul></dd>
     
 
@@ -923,7 +933,7 @@ as <code>[object Arguments]</code> when <code>.toString()-ed</code>.</p>
 
 
 <div class="description">
-    <p>Check that an item reports as a boolean</p>
+    <p>Check that an item reports as a boolean.</p>
 </div>
 
 
@@ -1027,7 +1037,7 @@ as <code>[object Arguments]</code> when <code>.toString()-ed</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line143">line 143</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line215">line 215</a>
     </li></ul></dd>
     
 
@@ -1184,7 +1194,7 @@ directly by <code>{}</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line154">line 154</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line226">line 226</a>
     </li></ul></dd>
     
 
@@ -1340,7 +1350,7 @@ directly by <code>{}</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line166">line 166</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line238">line 238</a>
     </li></ul></dd>
     
 
@@ -1392,7 +1402,7 @@ directly by <code>{}</code>.</p>
 
 
 <div class="description">
-    <p>Check that an item is callable</p>
+    <p>Check that an item is callable.</p>
 </div>
 
 
@@ -1496,7 +1506,7 @@ directly by <code>{}</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line177">line 177</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line249">line 249</a>
     </li></ul></dd>
     
 
@@ -1548,7 +1558,7 @@ directly by <code>{}</code>.</p>
 
 
 <div class="description">
-    <p>Check that an item quacks like an element</p>
+    <p>Check that an item quacks like an element.</p>
 </div>
 
 
@@ -1652,7 +1662,7 @@ directly by <code>{}</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line188">line 188</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line260">line 260</a>
     </li></ul></dd>
     
 
@@ -1811,7 +1821,7 @@ changes made to undefined before is.js is evaluated.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line199">line 199</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line271">line 271</a>
     </li></ul></dd>
     
 
@@ -1863,7 +1873,7 @@ changes made to undefined before is.js is evaluated.</p>
 
 
 <div class="description">
-    <p>Check that an item quacks like a promise</p>
+    <p>Check that an item quacks like a promise.</p>
 </div>
 
 
@@ -1911,7 +1921,7 @@ changes made to undefined before is.js is evaluated.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line224">line 224</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line296">line 296</a>
     </li></ul></dd>
     
 
@@ -2050,7 +2060,7 @@ changes made to undefined before is.js is evaluated.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line233">line 233</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line305">line 305</a>
     </li></ul></dd>
     
 
@@ -2102,7 +2112,7 @@ changes made to undefined before is.js is evaluated.</p>
 
 
 <div class="description">
-    <p>Check that item is a range of null values</p>
+    <p>Check that item is a range of null values.</p>
 </div>
 
 
@@ -2212,7 +2222,7 @@ changes made to undefined before is.js is evaluated.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line244">line 244</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line316">line 316</a>
     </li></ul></dd>
     
 
@@ -2368,7 +2378,7 @@ changes made to undefined before is.js is evaluated.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line255">line 255</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line327">line 327</a>
     </li></ul></dd>
     
 
@@ -2524,7 +2534,7 @@ changes made to undefined before is.js is evaluated.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line266">line 266</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line338">line 338</a>
     </li></ul></dd>
     
 
@@ -2681,7 +2691,7 @@ their object counterpart</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line277">line 277</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line349">line 349</a>
     </li></ul></dd>
     
 
@@ -2871,7 +2881,7 @@ it will be an ends with match. If no dot, then it will be a starts with match.</
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line289">line 289</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line361">line 361</a>
     </li></ul></dd>
     
 
@@ -3027,7 +3037,7 @@ it will be an ends with match. If no dot, then it will be a starts with match.</
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line320">line 320</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line392">line 392</a>
     </li></ul></dd>
     
 
@@ -3184,7 +3194,7 @@ Where emptiness can mean different things for different types.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line331">line 331</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line403">line 403</a>
     </li></ul></dd>
     
 
@@ -3340,7 +3350,7 @@ Where emptiness can mean different things for different types.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line361">line 361</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line433">line 433</a>
     </li></ul></dd>
     
 
@@ -3569,7 +3579,7 @@ rather than words.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line386">line 386</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line458">line 458</a>
     </li></ul></dd>
     
 
@@ -3801,7 +3811,7 @@ is.what.type(123, 'object', 'array');          // false</code></pre>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="is.js.html">is.js</a>, <a href="is.js.html#line488">line 488</a>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line560">line 560</a>
     </li></ul></dd>
     
 
@@ -3879,7 +3889,7 @@ is.what.type(123, 'object', 'array');          // false</code></pre>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 02:08:38 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 10:39:49 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

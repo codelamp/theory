@@ -22,4 +22,4 @@ By default the above will serve over `localhost:8881`.
 
 Currently you will find the live documentation for this repo here:
 
-[http://codelamp.github.io/theory/docs/html](http://codelamp.github.io/theory/docs/html)
+[http://codelamp.github.io/theory/docs/html/theory/0.5.0](http://codelamp.github.io/theory/docs/html/theory/0.5.0)

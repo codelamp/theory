@@ -133,7 +133,7 @@ To re-build the documentation:
 
 To view the live documentation, go here:
 
-[http://codelamp.github.io/theory/docs/html](http://codelamp.github.io/theory/docs/html)
+[http://codelamp.github.io/theory/docs/html/theory/0.5.0](http://codelamp.github.io/theory/docs/html/theory/0.5.0)
 
 ### Demo
 

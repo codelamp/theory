@@ -131,7 +131,7 @@ This is powered by [Karma](http://karma-runner.github.io) and [Istanbul](https:/
 
 The current output for this version of the repo lies here:
 
-[http://codelamp.github.io/theory/tests.html](http://codelamp.github.io/theory/tests.html)
+[http://codelamp.github.io/theory/docs/html/theory/0.5.0/coverage](http://codelamp.github.io/theory/docs/html/theory/0.5.0/coverage)
 
 ### Documentation
 

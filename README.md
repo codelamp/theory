@@ -125,6 +125,14 @@ To view the live tests, go here:
 
 [http://codelamp.github.io/theory/tests.html](http://codelamp.github.io/theory/tests.html)
 
+### Code Coverage
+
+This is powered by [Karma](http://karma-runner.github.io) and [Istanbul](https://www.npmjs.com/package/karma-istanbul-reporter).
+
+The current output for this version of the repo lies here:
+
+[http://codelamp.github.io/theory/tests.html](http://codelamp.github.io/theory/tests.html)
+
 ### Documentation
 
 Next up is documentation. To run the documentation site locally you'll need to run the following:

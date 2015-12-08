@@ -102,7 +102,12 @@ theory = t = {
     for ( var i in b ) {
       if ( a[i] === undefined || (options && options.overwrite) ) {
         if ( options && options.debug ) { console.log(i); }
-        a[i] = b[i];
+        if ( options && options.each ) {
+          a[i] = options.each(b[i], i);
+        }
+        else {
+          a[i] = b[i];
+        }
       }
       else {
         t.extend(a[i], b[i]);

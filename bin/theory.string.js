@@ -53,6 +53,14 @@ String.prototype.contains = function(v){
  */
 theory.string = t.creator.callable({
   
+  theory: {
+    prep: function(desc){
+      desc.instructions.processGroup = desc.instructions.processGroup.bind(desc);
+      desc.instructions.processItem = desc.instructions.processItem.bind(desc);
+      return desc;
+    }
+  },
+  
   /**
    * A collection of properties that are shared (i.e. same reference) across 
    * {@linkcode theory.string} instances.

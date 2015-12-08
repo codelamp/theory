@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Theory.js Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/png" href="favicon-x16.png" />
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css" />
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome.css" />
+    
+      <link type="text/css" rel="stylesheet" href="styles/index.css" />
+    
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">
+      Theory.js
+      
+        <sup style="font-size: 0.5em; letter-spacing: 2px; margin-left: 10px;">0.5.0</sup>
+        
+    </h1>
+    
+    
+
+
+
+    
+
+
+  <h2 style="font-size: 16px; font-weight: normal; margin: 0 0 0 24px;">Create, navigate, and augment structures &mdash; in interesting ways.</h2>
+  <blockquote style="margin-left: 24px; color: red;">Please Note: this documentation is still a work in progress.</blockquote>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section id="readme">
+        <article><h2>Why theory.js</h2><p>This library pretty much culminated itself from different theories I had about how to approach constructing and navigating objects in JavaScript.</p>
+<p>Over time the code has taken on one key concept:</p>
+<blockquote>
+<p>Using descriptions and selections can be more powerful than bespoke code, and can make your system more generalised.</p>
+</blockquote>
+<p>If you have an object that describes a behaviour, it forces you to break that behaviour down into constituent parts &mdash; and if you do things properly, those parts should be simple to understand and to re-use.</p>
+<p>Keeping complex behaviour as descriptions also allows them to be more easily extended, exported or re-interpreted.</p>
+<p>This library is still — as ever — a work in progress and has been since 2009 (don't worry, it has been rewritten a number of times since then).</p>
+<p>I have committed this codebase now, just to give an example of my recent JavaScript development to prospective employers. The library won't really be of much use to others util I reach v1.0.</p>
+<p><strong>Watch this space for new commits shortly :)</strong></p>
+<hr>
+<h2>Getting started</h2><p>The actual JavaScript library can be found within <code>./bin</code>. Which you can obviously just include this in your page as follows:</p>
+<pre class="prettyprint source"><code>&lt;script src=&quot;bin/is.js&quot;>&lt;/script>
+&lt;script src=&quot;bin/theory.js&quot;>&lt;/script>
+
+&lt;!-- include each submodule as needed //-->
+&lt;script src=&quot;bin/theory.string.js&quot;>&lt;/script>
+&lt;script src=&quot;bin/theory.navigate.js&quot;>&lt;/script></code></pre><p><code>is.js</code> is a standalone include that <code>theory.js</code> currently requires, and is responsible for type checking.</p>
+<p>I may fold it into <code>theory.js</code> once I've got my code building and minifcation up and running for this repo. For now however, it must be included first.</p>
+<p>There is also a <code>defer</code> or <code>async</code> method that is still in progress at the moment, but will be used as such:</p>
+<pre class="prettyprint source"><code>&lt;script src=&quot;bin/is.js&quot;>&lt;/script>
+&lt;script defer src=&quot;bin/theory.js&quot;>
+  t.include (&quot;bin/theory.string.js&quot;);
+  t.include (&quot;bin/theory.navigate.js&quot;);
+&lt;/script></code></pre><p>or:</p>
+<pre class="prettyprint source"><code>&lt;script src=&quot;bin/is.js&quot;>&lt;/script>
+&lt;script async src=&quot;bin/theory.js&quot;>
+  t.include (&quot;bin/theory.string.js&quot;);
+  t.include (&quot;bin/theory.navigate.js&quot;);
+&lt;/script></code></pre><p>Then if you wish to have other resources that depend on Theory:</p>
+<pre class="prettyprint source"><code>&lt;noscript data-defered-until=&quot;theory&quot;>
+&lt;script>
+console.log(theory, 'is read now');
+&lt;/script>
+&lt;noscript></code></pre><p>The above would work with inline scripts, other script includes, link tags.</p>
+<hr>
+<h2>Other useful things in this repo</h2><p>If you wish to run any of the automated tests, try out the Theory demo, or generate the documentation locally &mdash; you'll need to do the following:</p>
+<ol>
+<li><p><strong>Install <code>node</code> and <code>npm</code></strong> &mdash; if you don't have them already <a href="https://nodejs.org/en/download/package-manager">https://nodejs.org/en/download/package-manager</a></p>
+</li>
+<li><p><strong>Clone this repo to a folder on your computer, and change directory to that folder</strong></p>
+<pre class="prettyprint source"><code> git clone git@github.com:codelamp/theory.git theory; cd theory</code></pre></li>
+<li><p><strong>Create a variable to make it easier to refer to this folder (OPTIONAL)</strong></p>
+<pre class="prettyprint source"><code> export THEORY_DIR=$(pwd)</code></pre><p> You can use this variable (for the current termnial session) e.g.</p>
+<pre class="prettyprint source"><code> cd $THEORY_DIR</code></pre></li>
+<li><p><strong>Once installed, run <code>npm install</code> within <code>THEORY_DIR</code></strong></p>
+<pre class="prettyprint source"><code> npm install</code></pre></li>
+</ol>
+<p>After running the above the following node modules should be installed:</p>
+<ol>
+<li><code>http-server</code></li>
+<li><code>jasmine-core</code></li>
+<li><code>karma</code></li>
+<li><code>karma-chrome-launcher</code></li>
+<li><code>karma-coverage</code></li>
+<li><code>karma-jasmine</code></li>
+<li><code>jsdoc</code></li>
+</ol>
+<blockquote>
+<p>It should also ask if you wanted to download and install <code>Firebug lite</code> for the demo HTML. This only required (for the moment) if you wan't to run the demo.</p>
+</blockquote>
+<p>If all the above seems to have gone well, then you have the choice of the following.</p>
+<h3>Tests</h3><p>Theory's tests are driven by Jasmine, the simplest way to view if the tests are passing is to run:</p>
+<pre class="prettyprint source"><code>open tests.html</code></pre><p>Or to view the above HTML file in a browser.</p>
+<p>If you'd rather run the tests from the command line, you can use <a href="http://karma-runner.github.io">Karma</a>.</p>
+<p>Just before you do however, to make running it easier you may wish to install the following:</p>
+<pre class="prettyprint source"><code>npm install -g karma-cli</code></pre><p>This allows you to type just <code>karma</code>, rather than having to specify the entire path.</p>
+<p>Next you just need to execute the following in <code>$THEORY_DIR</code>.</p>
+<pre class="prettyprint source"><code>karma start</code></pre><p>That should run each of the specs and report whether everything is running ok.</p>
+<h3>Documentation</h3><p>Next up is documentation. To run the documentation site locally you'll need to run the following:</p>
+<pre class="prettyprint source"><code>./docs/serve.sh</code></pre><p>To re-build the documentation:</p>
+<pre class="prettyprint source"><code>./docs/make.sh</code></pre><p>To view the live documentation, go here:</p>
+<p><a href="http://codelamp.github.io/theory/docs/html">http://codelamp.github.io/theory/docs/html</a></p>
+<h3>Demo</h3><p>To host the Theory demo locally so it can be viewed in a browser, execute the following:</p>
+<pre class="prettyprint source"><code>npm run serve</code></pre><p>That will use <code>http-server</code> (which should have installed with <code>npm install</code>) to serve the required HTML, CSS and JS over localhost.</p>
+<blockquote>
+<p>Please Note: For now the demo really doesn't do anything. It will do shortly however.</p>
+</blockquote>
+<hr>
+<h2>String Theory</h2><p>String Theory &mdash; unlike its scientific namesake &mdash; has nothing to do with attempting to explain ultra-reallity, but instead everything to do with describing JavaScript structures. Initially built as a simple shorthand for navigating objects, the code has now been generalised to allow for construction of bespoke parser systems.</p>
+<p>An example of <code>theory.string()</code> in use would be when using <code>t.navigate</code>.</p>
+<pre class="prettyprint source"><code>t.navigate(myObject).select('firstKey/^keyStartsWith/($keyContains this)');</code></pre><p>The path notation used above is parsed using String Theory. The parsing generates an internal object structure that is then used to navigate an Object structure.</p>
+<p>See <a href="theory.string.shared.html#..instructions.opn"><code>theory.string.shared.instructions.opn</code></a>, and navigate to the source code to see the description that powers the above parser.</p>
+<h3>Creating a parser</h3><p>Parsers are created by providing instruction sets for <a href="theory.string.html"><code>t.string</code></a> to use. Here is an cut-down set for parsing Theory's method overload keys:</p>
+<pre class="prettyprint source"><code>theory.string.instructions('theory-overload-keys', {
+  'default': {
+    content: [
+      { ranges: ['squareOptional', 'square'] }
+    ]
+  },
+  'squareOptional': {
+    name: 'squareOptional',
+    start: &quot;[&quot;,
+    end: &quot;]?&quot;,
+    content: [
+      { divide: ['commas'], makes: 'item' }
+    ]
+  },
+  'square': {
+    name: 'square',
+    start: &quot;[&quot;,
+    end: &quot;]&quot;,
+    content: [
+      { divide: ['commas'], makes: 'item' }
+    ]
+  },
+  'commas': {
+    name: 'commas',
+    token: ',',
+    makes: 'item'
+  },
+  'item': {
+    name: 'item'
+  }
+});</code></pre><p>Currently strings are broken up using either <code>ranges</code> or <code>divides</code>. The former finds a start and end point &mdash; based on tokens &mdash; and creates a new substring from that. The latter finds certain tokens and creates sub strings from the parts between the tokens. These ranges or divides are applied in a recursive manner, in the order described by the instruction set.</p>
+<p>The process is actually quite simple, and can be followed manually, all you have to do is start at the <code>default</code> key and follow the logic.</p>
+<p>For example, taking the string <code>[object, number, function] [object]?</code> the steps would be.</p>
+<ol>
+<li>Start at <code>default</code> in the instruction set.</li>
+<li>Scan for a range start of either <code>[</code> or <code>[</code> <em>(squareOptional or square)</em>.</li>
+<li>Square would be found, and then squareOptional.</li>
+<li>This would create three strings internally under a built-in type called <code>combination</code>.</li>
+<li>&quot;[object, number, function]&quot;, &quot; &quot;, and &quot;[object]?&quot;</li>
+<li>For the <code>square</code>, scan for a divide of &quot;,&quot; &mdash; each divide makes an <code>item</code>.</li>
+<li>For the <code>squareOptional</code>, do the same as for <code>square</code>.</li>
+<li>The resulting object <em>(simplified here for brevity)</em> would be <code>[['object', 'number', 'function'], ' ', ['object']]</code>.</li>
+</ol>
+<p>Whilst to achieve the above seems quite simple, the code behind it is quite complex. This is because each specific operation takes into account the fact that tokens may be escaped, or within sub ranges... it is not just as simple as using <code>.indexOf</code> and <code>.split</code>.</p>
+<blockquote>
+<p>NOTE: For now only string tokens are supported, but the future should see Regular Expressions and ES6 support for string tokens.</p>
+</blockquote>
+<p>For further information see the documentation at <a href="theory.string.html"><code>t.string</code></a>.</p>
+<h3>Performance</h3><p>It should be noted that <code>t.string</code> cannot, and will not, attempt to compete &mdash; in terms of performance &mdash; with actually coding your own lexical/parser system. What <code>t.string</code> is attempting to do is to make this process quicker and easier to accomplish. It never pays to optimise early, and if you can sketch out your idea quickly (and safely) directly in code, you can get your project up and running far faster. If whatever you have built suddenly becomes popular, or requires heavy optimisation, you can always switch out <code>t.string</code> for something more tailored. Especially as the interface i.e. a string of encoded information, will be implementation agnostic.</p>
+<hr>
+<h2>Object Theory</h2><p>... Unfortunately is still under development at the moment.</p>
+<hr>
+<h2>Creator Theory</h2><p>I need to write a nice section about this, but for the meantime, you can read here <a href="theory.creator.html"><code>theory.creator</code></a></p>
+<hr>
+<script>
+document.querySelectorAll && (function(titles){
+  var text;
+  var strip = function(html){
+    var container = document.createElement('div');
+    container.innerHTML = html;
+    html = container.textContent || container.innerText;
+    container = null;
+    return html;
+  };
+  for ( var i=0; i<titles.length; i++ ) {
+    text = strip(titles[i].innerHTML);
+    text = text.toLowerCase().replace(/[^a-z0-9]/g, '');
+    titles[i].setAttribute('id', text);
+  }
+})(document.querySelectorAll('h1,h2,h3,h4,h5,h6'));
+document.body && (function(elm){
+  elm.innerHTML = [
+    '<nav id="theory">',
+      '<div class="center">',
+        '<a href="#objecttheory" class="objectTheory"><img src="images/bubble-objecttheory.png" height="147" border="0" width="216"></a>',
+        '<a href="#stringtheory" class="stringTheory"><img src="images/bubble-stringtheory.png" height="147" border="0" width="216"></a>',
+        '<a href="#creatortheory" class="creatorTheory"><img src="images/bubble-creatortheory.png" height="147" border="0" width="216"></a>',
+      '</div>',
+    '</nav>',
+    '<hr >'
+  ].join("\n") + elm.innerHTML;
+})(document.getElementById('readme'));
+</script></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<div id="menu-icon">
+  <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
+</div>
+<nav id="menu">
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 02:08:38 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

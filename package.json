@@ -1,0 +1,23 @@
+{
+  "name": "theory",
+  "version": "0.5.0",
+  "author": "Phil Glanville <phil@codelamp.co.uk>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codelamp/theory"
+  },
+  "scripts": {
+    "install": "./install/get-fbl.sh",
+    "serve": "./serve.sh"
+  },
+  "devDependencies": {
+    "http-server": "*",
+    "jasmine-core": "^2.4.1",
+    "karma": "*",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-coverage": "*",
+    "karma-jasmine": "^0.3.6",
+    "jsdoc": "*"
+  }
+}

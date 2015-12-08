@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Theory.js Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/png" href="favicon-x16.png" />
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css" />
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome.css" />
+    
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">
+      Namespace: theory.creator
+        
+    </h1>
+    
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="theory.html">theory</a></span>
+        
+        .creator
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Allows for the creation of an object &quot;constructor&quot;.</p>
+<p>Theory doesn't use conventional constructors (i.e. a function with a prototype)
+instead, it makes use of the <code>Object.create</code> methodology.</p>
+<p>You provide an object that is used as the base prototype, all instances are
+derived from this object, along with some specific &quot;Theory<sup>&trade;</sup>&quot; enhancements.</p>
+<p>Theory also doesn't implement any class-like inheritance, perfering to opt for
+the mixin / borrow approach. This comes from the perspective that the real creative power 
+behind JavaScript is to share objects and methods. To be flexible, sketchable and extensible
+as much as possible. Whilst this may fly in the face of specific runtime optimisations &mdash; 
+those that can be gained through using prototyped constructors and hidden classes &mdash; I have 
+yet to come across a situation where I have needed that kind of speed.</p>
+<p>Put simply, if you are a developer who needs those kinds of crucial optimisations, building 
+massively complex and intensive systems, you are unlikely to be using Theory.</p>
+<h6>Creator rules</h6><p>Beyond passing in an object with whatever methods attached of your choosing,
+<code>t.creator</code> listens out for some specific keys that either it expects to have,
+or that modify its behaviour. These are:</p>
+<ul>
+<li><strong>prep</strong> &mdash; if no method supplied, a default is added.</li>
+<li><strong>create</strong> &mdash; if no method supplied, a default is added.</li>
+<li><strong>theory</strong> &mdash; if this subobject exists, traverse and apply what it describes to the constructor.</li>
+</ul>
+<h6>Create method</h6><p>In most cases you won't need to specify your own create method, but you can do so
+if you like. The basis of such a method is as follows:</p>
+<pre class="prettyprint source"><code>create: function(){
+  return this.prep.apply(Object.create(this), arguments);
+}</code></pre><p>The default create method that is supplied for all creators however, looks like this:</p>
+<pre class="prettyprint source"><code>create: function(){
+  var creator = this;
+  var o = creator.prep.apply(Object.create(creator), arguments);
+      o.constructor = creator;
+      o.mixTo = t.creator.mixToInstance;
+      o.mixOwnTo = t.creator.mixOwnToInstance;
+      o.creator = function(){ return creator; };
+      o.isNamespacedOf = null;
+      o.getNamespacedSource = null;
+  return o;
+}</code></pre><blockquote>
+<p>NOTE: Theory.js already polyfills <code>Object.create</code>, so you do not need to worry
+  if the browser supports it or not.</p>
+</blockquote>
+<h6>Prep method</h6><p>Each creator requires a method that is executed whenever a new instance is
+created, this is named <code>prep</code> and is called directly after <code>create</code> is called.</p>
+<p>Whereas <code>create</code> is nearly always the same for every creator, <code>prep</code> only needs
+to follow one rule. It must return <code>this</code>. Other than that, it can be defined
+as you like.</p>
+<blockquote>
+<p>NOTE: In most of the Theory code prep is used to set-up the internal object
+  a.k.a. <code>i</code>. This is so that each instance has its own unique reference that
+  it can store &quot;private&quot; data within.</p>
+</blockquote>
+<p>for example:</p>
+<pre class="prettyprint source"><code>t.creator({
+  i: null,
+  prep: function(){
+    this.i = {}; // &lt;-- set up a new object with each instance.
+  },
+  sharedMethod: function(){
+    // Whilst we are creating a new `this.i` each istance, this method will be shared.
+  }
+});</code></pre><h6>Theory subobject</h6><p>You can define a subobject within your creator's description under the key of
+<code>theory</code> which will add more abilities to your creator. Expected keys are currently:</p>
+<ul>
+<li><p><strong>prep</strong> &mdash; This method will be executed just after the creator has been
+created. It is passed the creator's description (after any automatic 
+additions) and is responsible for returning it (or a replacement). This
+method can be used to apply changes to the description that rely on
+referencing the description itself.</p>
+</li>
+<li><p><strong>mix</strong> &mdash; This array is used to list the items that should be mixed in to
+the creator .</p>
+</li>
+</ul>
+<p>for example:</p>
+<pre class="prettyprint source"><code>t.creator({
+  theory: {
+    /// implement a simplistic version of `theory.creator.callable`
+    prep: function(desc){
+      var callable = function(){ return desc.create.apply(desc, arguments); };
+      t.extend(callable, desc);
+      return callable;
+    },
+    /// mixin all usable methods from t.events (not fully functional yet,
+    /// I am currently working out exactly how this should behave with
+    /// regard to the difference between static and instance methods.)
+    mix: [ t.events ]
+  }
+});</code></pre><blockquote>
+<p>NOTE: Future versions of Theory may rename the <code>prep</code> here to something else,
+  to avoid confusion with the decription prep method.</p>
+</blockquote>
+<h6>Static quirk</h6><p>One oddity with the way Theory creators are constructed is that every property and
+method will exist for each instance of a creator (as expected), but they will also 
+exist statically on the creator object itself.</p>
+<pre class="prettyprint source"><code>var a = t.creator({
+  myVeryEasyMethod: function(){
+    return 'justSetUpNinePlanets';
+  }
+});
+
+var b = a.create();
+
+console.log( a.myVeryEasyMethod() ); // justSetUpNinePlanets
+console.log( b.myVeryEasyMethod() ); // justSetUpNinePlanets</code></pre><p>The Theory codebase takes advantage of this quirk in many places, and has specifically
+coded methods to handle each way the method might be called. But it should be noted
+this is not typically the case (or expected) for many frameworks or languages. Especially
+to those coming from a strict class-based environment.</p>
+<p>Whilst many may not like this approach, it ties in well with Theory's open and 
+shared ethos, allowing access to methods where you might expect them &mdash; rather
+than having to shift down the prototype chain.</p>
+<p>The main thing to take away from this quirk?</p>
+<blockquote>
+<p>You should always know where your <code>this</code> is...</p>
+</blockquote>
+<p>But then again, you're a JavaScript developer, so that should be second nature. ;)</p></div>
+        
+
+        
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1849">line 1849</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>automatically mixing in object with `mix:` is not yet defined.</li>
+        </ul>
+    </dd>
+    
+</dl>
+</div>
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="theory.creator.i.html">theory.creator.i</a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="..___callable">theory.creator<span class="signature">(desc)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Whilst <code>theory.creator</code> is a namespace &mdash; to house all things &quot;creator&quot; &mdash; 
+it is also a function in itself. It should be called directly to create
+new creators.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    desc
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The description object that describes the creator.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+    <h5>Example</h5>
+
+<pre class="prettyprint"><code>var a = t.creator({
+
+  // It is recommended that creators have their own internal object.
+  // This is because every instance of a creator chains back to
+  // the description object via its prototype chain. This means that
+  // the new instance will be sharing every referencable property 
+  // and method with all the other instances. Whilst you could
+  // define "internal" properties directly on your instance, it
+  // is a far better coding style to use objects as namespaces.
+  // Mainly because it becomes much easier to manage grouped properties.
+  // You may opt to use something other than `i`, but that is a standard
+  // within the theory codebase itself.
+  i: null,
+
+  // just the same as .i, it can be useful to have a namespaced .shared
+  // object. Used for containing properties that are shared between
+  // instances. Again this is personal preference, but the Theory 
+  // codebase tends to keep the base object of a creator containing
+  // just shared methods, and a subobject called "shared", containing 
+  // shared properties.
+  shared: {},
+
+  // .create is automatically added, so you don't need this.
+  // create: function(){...}
+
+  // Every creator should have a `prep` method, one will be automatically
+  // added if not provided. This function is responsible for setting up
+  // new instances.
+  prep: function(param){
+    this.i = {};
+    this.i.param = param;
+    return this;
+  },
+
+  // As with every method and referencable property, this method will exist
+  // statically on the creator and on every created instance using `.create()`
+  aSimpleMethod: function(){},
+
+  // Create a t.overload method that handles both object and string arguments
+  anOverloadedMethod: {
+    overloads: {
+      '[object]': function(obj){ return 'you object!'; },
+      '[string]': function(str){ return 'you string!'; }
+    }
+  },
+
+  // Create a t.method with additional attributes
+  aTheoryMethod: {
+    attributes: {
+      exposedOnMethod: function(){ return 'hello'; }
+    }
+    method: function(){ return 'world'; }
+  },
+
+  // An alternative overload syntax
+  aDifferentWayToOverload: {
+    method: {
+     defaults: [[], 0],
+     arguments: '[array, number]',
+     method: function(args){}
+    }
+  }
+
+});
+
+var b = a.create(123);                        // &lt;-- creates a new instance of a.
+
+console.log(b.i.param);                       // 123
+console.log(b.aTheoryMethod.exposedMethod()); // hello
+console.log(b.aTheoryMethod());               // world
+console.log(b.anOverloadedMethod({}));        // you object!
+console.log(b.anOverloadedMethod(''));        // you string!</code></pre>
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1851">line 1851</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".callable">theory.creator.callable<span class="signature">(desc)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Create a creator that can be called as a function rather than 
+having to use <code>.create()</code>.</p>
+<p>Unfortunately, avoiding experimental JS advances means that
+the best way to achieve a callable object, is to mix the 
+object properties across to that of a function. This means
+you don't retain the original object reference, and have
+to modify the behaviour of <code>isPrototypeOf</code> &mdash; but it is better
+than nothing.</p>
+<p>The implementation may be rather simplistic, but it does 
+avoid depending on the likes of <code>__proto__</code> . New facilities 
+that can't be relied upon 100%.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    desc
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The description object that describes the creator.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+    <h5>Example</h5>
+
+<pre class="prettyprint"><code>var a = t.creator.callable({
+
+  // it is recommended that creators have their own internal object (see above)
+  i: {},
+
+  // every creator should have a `prep` method (see above)
+  prep: function(param){
+    this.i = {};
+    this.i.param = param;
+    return this;
+  },
+
+  aRandomMethod: function(){
+    // this method will exist both statically
+    // and on every created instance using `.create()`
+  }
+
+});
+
+var b = a(123);         // &lt;-- calls .create() in the background
+    b = a.create(123);  // &lt;-- creates a new instance of a.
+
+console.log(a.i.param); // undefined
+console.log(b.i.param); // 123</code></pre>
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1982">line 1982</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="mixTo">theory.creator().mixTo<span class="signature">(dest, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Each creator has the ability to mix its content into another 
+object. By default the context is preserved to be that of 
+the object being borrowed from &mdash; however this can be changed by 
+passing:</p>
+<pre class="prettyprint source"><code>.mixTo(..., {preserveContext: false});</code></pre><p>By default this will mix every method, unless filterd out, or the 
+current context provides a <code>getMixToList()</code> method that returns 
+an array of keys to mix.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    dest
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    options
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+              <tr>
+              <td colspan="4">
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    options.preserveContext
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    = true
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+              </td>
+              </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line2057">line 2057</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="mixOwnTo">theory.creator().mixOwnTo<span class="signature">(dest, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>The same as <a href="theory.creator.html#mixTo"><code>t.creator().mixTo()</code></a> save for being filtered by <code>hasOwnProperties</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    dest
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    options
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+              <tr>
+              <td colspan="4">
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    options.preserveContext
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    = true
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+              </td>
+              </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+    <h5>Example</h5>
+
+<pre class="prettyprint"><code>var a = t.creator({
+  methodToMix: function(){
+    return this;
+  }
+});
+
+var b = {};
+
+a.mixTo(b);
+
+console.log( b.methodToMix() === a ); // true</code></pre>
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line2092">line 2092</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="namespace">theory.creator().namespace<span class="signature">(name<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>namespace allows a new version of the creator to exist (that inherits
+from the original) but allows configurational changes to be made under
+a particular named-space.</p>
+<h6>Why namespace a creator?</h6><p>Theory's ethos is that any piece of code should be able to take another
+piece of code and configure it to run within its own parameters, even
+if another piece of code is doing exactly the same thing elsewhere in 
+the same environment.</p>
+<p>Namespacing allows you to do this.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    name
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>If a name is specified the namespace is cached 
+       and the same namespace will be returned each time that name is used.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line2219">line 2219</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<div id="menu-icon">
+  <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
+</div>
+<nav id="menu">
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 02:08:38 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

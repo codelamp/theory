@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Theory.js Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/png" href="favicon-x16.png" />
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css" />
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome.css" />
+    
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">
+      Namespace: theory.string.instructions
+        
+    </h1>
+    
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="theory.html">theory</a><a href="theory.string.html">.string</a>.</span>
+        
+        instructions
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Responsible for handling all of the instruction sets for <a href="theory.string.html"><code>t.string</code></a></p>
+<p>New instruction sets can be added using <a href="theory.string.instructions.html#..___callable"><code>t.string.instruction</code></a></p></div>
+        
+
+        
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.string.js.html">theory.string.js</a>, <a href="theory.string.js.html#line129">line 129</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="..___callable">theory.string.instructions<span class="signature">(name)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Get a named instruction set, that has been previously defined.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    name
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The lookup name used to find the instruction set.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.string.js.html">theory.string.js</a>, <a href="theory.string.js.html#line131">line 131</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="..___callable">theory.string.instructions<span class="signature">(name, instructions)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Set a named instruction set that can be used with <a href="theory.string.html#.parse"><code>theory.string.parse</code></a></p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    name
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The lookup name that the instructions will be stored under.</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    instructions
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The instructions object</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.string.js.html">theory.string.js</a>, <a href="theory.string.js.html#line131">line 131</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".processGroup">theory.string.instructions.processGroup<span class="signature">(instructions, name, snowball)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>The parser works by logically following an object list of instructions, which in turn
+have sub instructions that can loop back to other instructions.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    instructions
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>the overaching set of instructions</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    name
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>an string describing the current name of the instruction (or the actual instruction in object form)</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    snowball
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>initially starts with the string to be passed 
+  defined as <code>{string:'...'}</code>, later is used to keep track of the parsing, and then is the 
+  object to be returned after processing is complete.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.string.js.html">theory.string.js</a>, <a href="theory.string.js.html#line170">line 170</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".processItem">theory.string.instructions.processItem<span class="signature">(instructions, instruction, snowball, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Each instruction set is applied to a particular range of the string to be parsed.
+This string range is tracked within the snowball object.</p>
+<p>An instruction set can contain one or more groups of sub-instructions.</p>
+<p>The default behaviour is to run all sub-instructions in sequence. However, if a 
+group of sub-instructions is set to short circuit, then any time a sub-instruction 
+finds a match, processing will cease for that group and instead start for the next 
+(if there is one).</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    instructions
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>the overarching object that contains all the instructions</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    instruction
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>an individual instruction, that has been drilled down to by 
+<a href="theory.string.instructions.html#.processGroup"><code>processGroup</code></a></p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    snowball
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>see the description for <a href="theory.string.instructions.html#.processGroup"><code>processGroup</code></a></p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    options
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>change the behaviour of this function</p></td>
+        </tr>
+            
+              <tr>
+              <td colspan="4">
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    options.dividerOffset
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    = 0
+                
+                </td>
+            
+
+            <td class="description last"><p>change where the divider will start from</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+              </td>
+              </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.string.js.html">theory.string.js</a>, <a href="theory.string.js.html#line209">line 209</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<div id="menu-icon">
+  <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
+</div>
+<nav id="menu">
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 02:08:38 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Theory.js Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/png" href="favicon-x16.png" />
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css" />
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome.css" />
+    
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">
+      Namespace: theory.dom
+        
+    </h1>
+    
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="theory.html">theory</a></span>
+        
+        .dom
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Theory's early dom handling &mdash; it is used by Theory before 
+<code>t.navigate</code> has been loaded.</p>
+<p>It only supports rudimentary dom handling, which is mostly all that is 
+required for the majority of script-prep.</p>
+<ol>
+<li>Create basic elements</li>
+<li>Select elements using basic selectors</li>
+</ol></div>
+        
+
+        
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3436">line 3436</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>theory.navigate</li>
+        </ul>
+    </dd>
+    
+
+    
+    <dt class="tag-todo">To Do</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>the create elements part needs to be ported from kipple</li>
+        </ul>
+    </dd>
+    
+</dl>
+</div>
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".bits"><span class="type-signature">(static) </span>theory.dom.bits<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>You can extend the &quot;bit&quot; support by adding a handler to this array. Bits represent individual strings that make up a simplistic selector.</p>
+<p>The <code>handler</code> function in each handler object should return a callback to test each 
+element, and to specify whether the handler is to be run as a &quot;find&quot; operation (default)
+or as a &quot;filter&quot;.</p>
+<p>An example handler, that checks an element against a classname.</p>
+<pre class="prettyprint source"><code>{
+  pattern: /^\./,
+  handler: function(bit, context, options, particle){
+    return {
+      callback: this.getElementHasClassNameCheck(bit.substring(1, bit.length)),
+      filter: !!particle
+    };
+  }
+},</code></pre>
+</div>
+
+
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>bits</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>array of objects, each object in the form:</p>
+<pre class="prettyprint source"><code>{ pattern: /regexp/,
+  handler: function(bit, context, options, particle){
+    return {
+      callback: function(element){ return true||false },
+      filter: true||false
+    }
+} }</code></pre></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3743">line 3743</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+        
+            
+<h4 class="name" id=".source"><span class="type-signature">(static) </span>theory.dom.source<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3941">line 3941</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="theory.array.html#.source">theory.array.source</a></li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+        
+            
+<h4 class="name" id=".each"><span class="type-signature">(static) </span>theory.dom.each<span class="type-signature"></span></h4>
+
+
+
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3947">line 3947</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".findSimple">theory.dom.findSimple<span class="signature">(context<span class="signature-attributes">opt</span>, &hellip;arguments<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Find elements using simplistic selectors, and does not require 
+<code>document.querySelectorAll</code> to exist &mdash; but it will use it if it does.</p>
+<p>Instead it uses a mixture of <code>getElementsByTagName</code>, 
+<code>getElementsByClassName</code> and <code>childNode</code> navigation.</p>
+<p>This code is designed to be lightweight, and will <strong>ONLY</strong> support 
+the most common/basic selectors. These include:</p>
+<ol>
+<li>tag selectors</li>
+<li>classname selectors</li>
+<li>attribute selectors</li>
+</ol>
+<p>Before you ask why? This code is only used to help Theory boot &mdash; 
+it is not really designed to be used externally.</p>
+<h5>How it works</h5><p>This code relies on the user correctly breaking the selector up into 
+its &quot;particles&quot; and &quot;bits&quot;. E.g.</p>
+<pre class="prettyprint source"><code>t.dom.find('body',['div','.classname'],['span',['@attribute','~=','123']]);
+
+/// jQuery('body div.classname span[attribute~=123]');</code></pre><p>This saves quite a bit of processing and in library file size, but 
+obviously at the cost of readability, user's code size and user error.</p>
+<p>Hence the reason this code is really only for Theory to use until 
+something else better has loaded.</p>
+<ul>
+<li><strong>particle</strong> &mdash; essentially an array of bits that require to be grouped, i.e. <code>['@attr', '=', '123']</code></li>
+<li><strong>bit</strong> &mdash; a piece of a selector that can't be broken down any further, i.e. <code>'@attr'</code>, <code>'='</code>, or <code>'123'</code></li>
+</ul>
+<p>The reason for the code only supporting the above three types of selector, 
+is because I have only defined <code>bit</code> handlers for those three types. 
+There is nothing to stop external code extending this with your own bit 
+handlers, if you so wish.</p>
+<h5>Relationships / Combinators</h5><p>The only supported relationship selectors are  &quot;descendant&quot; (<code>body span</code>)
+and &quot;child&quot; (<code>body &gt; span</code>).</p>
+<p>More complex relationships like that of the adjacent sibling (<code>+</code>) and 
+general sibling (<code>~</code>) combinators are not supported.</p>
+<h5>Why not use an existing CSS selector engine?</h5><p>The simplest answer to this is that I wanted this library to be self-sufficient
+but didn't want to embed another 10k+ just to handle all selector edge-cases.
+Especially when I tend to only use the most basic selectors from a code perspective.</p>
+<p>I am currently planning to add code to allow this dom handling to hand off to 
+either jQuery or sizzle, if they are loaded.</p>
+<h5>Why not use <code>document.querySelectorAll</code>?</h5><p>Purely from a browser support perspective. True, nearly everything supports 
+<code>querySelectorAll</code> quite well these days. But to have a core part of your 
+library caught out even before it has fully booted because of a simple 
+missing function isn't a very good place to be in.</p>
+<h5>Extensible</h5><p>As with nearly everything in Theory, you can extend the basic dom handling. This
+can be achieved by adding to or changing handlers in the <a href="theory.dom.html#.bits"><code>theory.dom.bits</code></a>
+array.</p>
+<p>The <code>handler</code> function in each handler object should return a callback to test each 
+element, and to specify whether the handler is to be run as a &quot;find&quot; operation (default)
+or as a &quot;filter&quot;.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    context
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">element</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Define the base element that this function will work from</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    arguments
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last"><p>Define the particles and bits that make up your selector</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+    <h5>Examples</h5>
+
+<pre class="prettyprint"><code>// equivalent of `body .classname [title]`
+// which would match: &lt;body>&lt;span class="classname">&lt;i title />&lt;/span>&lt;/body>
+
+t.dom.findSimple('body', '.classname', '@title');</code></pre>
+
+<pre class="prettyprint"><code>// equivalent of `body.classname [title]`
+// which would match: &lt;body class="classname">&lt;span>&lt;i title />&lt;/span>&lt;/body>
+
+t.dom.findSimple(['body', '.classname'], '@title');</code></pre>
+
+<pre class="prettyprint"><code>// equivalent of `body.classname[title]`
+// which would match: &lt;body class="classname" title>&lt;/body>
+
+t.dom.findSimple(['body', '.classname', '@title']);</code></pre>
+
+<pre class="prettyprint"><code>// equivalent of `body.classname[title=example]`
+t.dom.findSimple(['body', '.classname', ['@title', '=', 'example']]);</code></pre>
+
+<pre class="prettyprint"><code>// equivalent of `body .classname[title=example]`
+t.dom.findSimple('body', ['.classname', ['@title', '=', 'example']]);</code></pre>
+
+<pre class="prettyprint"><code>// equivalent of `body > .classname[title=example]`
+t.dom.findSimple('body', '>', ['.classname', ['@title', '=', 'example']]);</code></pre>
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3571">line 3571</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>implement support for #ids</li>
+        </ul>
+    </dd>
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".implodeQuery">theory.dom.implodeQuery<span class="signature">(args)</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Take the simple query and work it back into an actual selector, so that it can be passed to <code>document.querySelectorAll</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    args
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Array of bits and particles to be built back into a selector string.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3588">line 3588</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".findElementsBy">theory.dom.findElementsBy<span class="signature">(context, callback)</span><span class="type-signature"> &rarr; {Array.&lt;element>}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Scan through a list of elements, and their descendants.
+Returns a list of those elements that caused the callback
+to return true.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    context
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">element</span>
+|
+
+<span class="param-type">Array.&lt;element></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A list of elements, or an singular element; used as the base context for the find operation.</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    callback
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+              <tr>
+              <td colspan="4">
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    callback(n)
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">element</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The callback expects its first argument to be an element</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    callback():returns
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The callback is expected to return a boolean.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+              </td>
+              </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3819">line 3819</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Array.&lt;element></span>
+
+
+  
+  <p>an array list of found elements.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".filterElementsBy">theory.dom.filterElementsBy<span class="signature">(list, callback)</span><span class="type-signature"> &rarr; {Array.&lt;element>}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Filter a list of elements using a callback.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    list
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;element></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The list of elements to filter</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    callback
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The callback will be used to test whether the current element should be filtered in (true) or out (false)</p></td>
+        </tr>
+            
+              <tr>
+              <td colspan="4">
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    callback(n)
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">element</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The callback expects its first argument to be an element</p></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    callback():returns
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The callback is expected to return a boolean.</p></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+              </td>
+              </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3854">line 3854</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Array.&lt;element></span>
+
+
+  
+  <p>an array list of filtered in elements.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".getItems">theory.dom.getItems<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Return the internal list of contextual items.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3955">line 3955</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".html">theory.dom.html<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Return the HTML of the current context, or the passed in parameter.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line3966">line 3966</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>requires completion</li>
+        </ul>
+    </dd>
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<div id="menu-icon">
+  <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
+</div>
+<nav id="menu">
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 02:08:38 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

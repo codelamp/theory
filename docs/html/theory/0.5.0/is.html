@@ -1,0 +1,3888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Theory.js Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="icon" type="image/png" href="favicon-x16.png" />
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css" />
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome.css" />
+    
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">
+      Namespace: is
+        
+    </h1>
+    
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        is
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Check that stuff is what it should be, or perhaps not what it isn't.</p>
+<p>The current definition of &quot;is&quot; methods are integral to theory.js. You 
+can change their behaviour but this may cause theory code to do strange 
+and unimaginable things &mdash; it could also just cause it to error and throw 
+wobblies all the time too.</p>
+<p>This is the reason for <code>is.what.type()</code> &mdash; this is a system designed
+to be used by external code. The way items are identified can be
+changed without causing internal theory issues.</p>
+<pre class="prettyprint source"><code>if ( is.string(randomVariable) ) {
+  /// do something here?
+}</code></pre></div>
+        
+
+        
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".array">is.array<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item quacks like an array</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item has .join method</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".arraylike">is.arraylike<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item is &quot;array like&quot;, meaning that it can most likely be treated
+in the simplest sense as an array. This does not cover checking that it supports 
+array methods i.e. like <code>slice</code> or <code>push</code>; just the fact that the object has a 
+numeric key structure i.e. <code>item[0]</code>, and <code>.length</code></p>
+<p>This will fail for array-likes that are empty &mdash; this is because we can only
+check that <code>.length</code> is a number &mdash; which is far too open. A special case 
+is made for an arguments object, because we can detect those by checking <code>.toString()</code>.</p>
+<p>I fully expect this method to be expanded as this code encounters other 
+array-likes, e.g. node lists.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line89">line 89</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item has <code>.join</code> method</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".arguments">is.arguments<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item is an <code>Arguments</code> object</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line109">line 109</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item has <code>.length</code> that is a number and reports
+as <code>[object Arguments]</code> when <code>.toString()-ed</code>.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".string">is.string<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item quacks like a string</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line121">line 121</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item has .charAt method</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".number">is.number<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item reports as a number</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line132">line 132</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item is <code>typeof number</code> (or has been constructed by <code>Number</code>)</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".bool">is.bool<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item reports as a boolean</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line143">line 143</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item is <code>typeof boolean</code> (or has been constructed by <code>Boolean</code>)</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".literalObject">is.literalObject<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item reports as a literal object, in the sense that it has been constructed
+directly by <code>{}</code>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line154">line 154</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item has a <code>.constructor</code> of Object</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".object">is.object<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item is an object. In JavaScript this is almost pointless.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line166">line 166</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item reports as <code>typeof object</code></p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".callable">is.callable<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item is callable</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line177">line 177</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if the item has <code>.call</code> and <code>.apply</code> methods</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".element">is.element<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item quacks like an element</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line188">line 188</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if the item has getElementsByTagName</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".undefined">is.undefined<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item is a stored version of undefined. Stored because
+JavaScript allows a local variable to be created called &quot;undefined&quot;
+which will override the value. Obviously this doesn't avoid any 
+changes made to undefined before is.js is evaluated.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line199">line 199</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if the item === a stored version of undefined</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".promise">is.promise<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item quacks like a promise</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line224">line 224</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".null">is.null<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item is null. This really is just for nice readability.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">null</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line233">line 233</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item === null</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".void">is.void<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that item is a range of null values</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">null</span>
+|
+
+<span class="param-type">undefined</span>
+|
+
+<span class="param-type">NaN</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line244">line 244</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item is NaN, undefined or null.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".NaN">is.NaN<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check that an item is specifically the type NaN.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">NaN</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line255">line 255</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item reports as a number, but is also isNaN.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".primitive">is.primitive<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>A primitive accounts for numbers, booleans, strings, undefined, NaN and null</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line266">line 266</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item reports as not being typeof object</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".primitiveObject">is.primitiveObject<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>A primitive object accounts for primitives that have been wrapped with 
+their object counterpart</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line277">line 277</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if item is typeof an object, but its valueOf() reports as not being an object.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".hostname">is.hostname<span class="signature">(locations, hostname)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>A simple test against the current, or passed in hostname &mdash; I'm not sure
+why this is here? I guess something used to use it... will have to find it.</p>
+<p>Accepts a list of locations to test. If a location starts with a dot, then
+it will be an ends with match. If no dot, then it will be a starts with match.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    locations
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+|
+
+<span class="param-type"><a href="String.html">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    hostname
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="String.html">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line289">line 289</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if a match is found between a location and hostname.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".markupNormalized">is.markupNormalized<span class="signature">(markup)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Check to see if html, when parsed by the browser, doesn't change</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    markup
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="String.html">String</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line320">line 320</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if the mark was normalised.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".empty">is.empty<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>The obligatory search for emptiness. Basically tests to see if an item is &quot;empty&quot;
+Where emptiness can mean different things for different types.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line331">line 331</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if deemed empty</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".towel">is.towel<span class="signature">(item)</span><span class="type-signature"> &rarr; {Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>You always have to know where (and what) your towel is.</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    item
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line361">line 361</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>returns true if you know what six times nine is.</p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="...what">is.what<span class="signature">(desc, depth<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="String.html">String</a>}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Determines what has been passed as <code>desc</code>, up to a certain depth. </p>
+<p>This uses the <a href="is.html#...what.type"><code>is.what.type</code></a> method to determine types, but 
+the <code>depth</code> parameter exists to help when describing arrays.</p>
+<p>For example, if you pass the following:</p>
+<pre class="prettyprint source"><code>is.what.type([123, 'test']);</code></pre><p>This will report <code>array</code> rather than the <code>number, string</code> you might've
+been hoping for. Instead use:</p>
+<pre class="prettyprint source"><code>is.what([123, 'test'], 1); // ['number', 'string']
+is.what([123, 'test']);    // 'array'</code></pre><p>The code automatically describes the outer-wrapping array using <code>[]</code>
+mainly to dovetail nicely with <a href="theory.html#.overload"><code>theory.overload</code></a>. It also
+means that the actual structure is still described, just with symbols
+rather than words.</p>
+<h5>notes</h5><blockquote>
+<p>The <code>depth</code> parameter does not apply to objects.</p>
+</blockquote>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    desc
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    depth
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    = 0
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line386">line 386</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+
+        
+<div class="param-desc">
+  
+    
+<span class="param-type"><a href="String.html">String</a></span>
+
+
+  
+  <p>returns a string describing what was passed in as <code>desc</code></p>
+</div>
+
+    
+</div>
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id="...what.type">is.what.type<span class="signature">(obj, &hellip;comparison<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="String.html">String</a>|Boolean}</span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>This is the code Theory exposes to allow external code to modify
+how types are recognised, mainly for use with the 
+<a href="theory.html#.overload"><code>theory.overload</code></a> method. By default it utilises a 
+mixture of typeof and duck testing to best guess the type of an
+object.</p>
+<p>With one parameter it returns a description string, but 
+with two or more the code will test the found type against
+each subsequent comparison parameter. If a match is found against
+any of the comparisons, the method will return <code>true</code> otherwise
+<code>false</code>.</p>
+<p>To add or change the way a type is identified, you just need to
+change the <code>is.what.types</code> array.</p>
+<p>If the <code>obj</code> you are testing supports an <code>isWhatType</code> method
+the code will use this first and foremost, falling back to the
+<code>is.what.types</code> array checks.</p>
+<p>The method can be called one of two ways:</p>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="parameters-wrapper">
+    <h5>Parameters</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    obj
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Any</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  <code>
+                    comparison
+                  </code>
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="String.html">String</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                    &lt;repeatable><br>
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+            
+
+    
+    </tbody>
+</table>
+
+</div>
+
+
+
+    <h5>Examples</h5>
+
+<pre class="prettyprint"><code>is.what.type({anObject:1});             // 'object'
+is.what.type('a chain of characters');  // 'string'
+is.what.type([123]);                    // 'array'</code></pre>
+
+<pre class="prettyprint"><code>is.what.type({anObject:1}, 'object');          // true
+is.what.type({anObject:1}, 'object', 'array'); // true
+is.what.type(123, 'object', 'array');          // false</code></pre>
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="is.js.html">is.js</a>, <a href="is.js.html#line488">line 488</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="returns-wrapper">
+<h5>Returns</h5>
+<ul>
+        <li>
+<div class="param-desc">
+  
+    
+<span class="param-type"><a href="String.html">String</a></span>
+
+
+  
+  <p>A string describing <code>obj</code> if no comparison has been provided i.e. <code>array</code>, 'string' or <code>function</code>.</p>
+</div>
+</li>
+    
+        <li>
+<div class="param-desc">
+  
+    
+<span class="param-type">Boolean</span>
+
+
+  
+  <p>A boolean if the description of <code>obj</code> matches any of the provided comparison strings.</p>
+</div>
+</li>
+    </ul>
+</div>
+
+</div>
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<div id="menu-icon">
+  <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
+</div>
+<nav id="menu">
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 02:08:38 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

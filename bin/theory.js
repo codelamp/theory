@@ -1477,10 +1477,18 @@ t.internal.array = {
     return this;
   },
   
+  /**
+   * @memberof! theory.array
+   * @method
+   */
   source: function(){
     return this.i.items;
   },
   
+  /**
+   * @memberof! theory.array
+   * @method
+   */
   each: function(callback, context){
     var target = this.source();
     !context && (context=this);
@@ -1492,6 +1500,10 @@ t.internal.array = {
     }
   },
   
+  /**
+   * @memberof! theory.array
+   * @method
+   */
   keys: function(target){
     if ( Object.keys ) {
       return t.array(Object.keys(target||this.source()));
@@ -1563,10 +1575,18 @@ t.internal.object = {
     return this;
   },
   
+  /**
+   * @memberof! theory.object
+   * @method
+   */
   source: function(){
     return this.i.source;
   },
   
+  /**
+   * @memberof! theory.object
+   * @method
+   */
   keys: function(target){
     if ( Object.keys ) {
       return t.array(Object.keys(target||this.source()));
@@ -1576,14 +1596,37 @@ t.internal.object = {
     }
   },
 
+  /**
+   * Handles usual expected `.each()` behaviour for objects, but also
+   * contains a number of more specific each-like methods.
+   *
+   * @memberof! theory.object
+   * @namespace
+   */
   each: t.method({
+    /**
+     * @memberof!  theory.object.each
+     * @method ___callable
+     */
+    method: function(callback, context){
+      return this.each.keyValues.apply(this, arguments);
+    },
     attributes: {
+      /**
+       * @memberof! theory.object.each
+       * @method
+       * @private
+       */
       _args: function(args){
         !args.le && (args[1]=this);
         if ( !is.callable(args[0]) ) {
           return t.error(new Error('t.array().each callback must be is.callable().'));
         }
       },
+      /**
+       * @memberof! theory.object.each
+       * @method
+       */
       key: function(callback, context){
         var key, target = this.source(); this.each._args(arguments);
         for ( key in target ) {
@@ -1592,6 +1635,10 @@ t.internal.object = {
           }
         }
       },
+      /**
+       * @memberof! theory.object.each
+       * @method
+       */
       value: function(callback, context){
         var key, target = this.source(); this.each._args(arguments);
         for ( key in target ) {
@@ -1600,6 +1647,10 @@ t.internal.object = {
           }
         }
       },
+      /**
+       * @memberof! theory.object.each
+       * @method
+       */
       keyValue: function(callback, context){
         var key, target = this.source(); this.each._args(arguments);
         for ( key in target ) {
@@ -1608,18 +1659,30 @@ t.internal.object = {
           }
         }
       },
+      /**
+       * @memberof! theory.object.each
+       * @method
+       * @todo requires completion, should step each sub object.
+       */
       object: function(callback, context){
         /// @TODO: Support for t.each.objects
       },
+      /**
+       * @memberof! theory.object.each
+       * @method
+       * @todo requires completion, should step each callable sub item.
+       */
       callable: function(callback, context){
         /// @TODO: Support for t.each.callables
       },
+      /**
+       * @memberof! theory.object.each
+       * @method
+       * @todo requires completion, should step each non-object sub item.
+       */
       attribute: function(callback, context){
         /// @TODO: Support for t.each.attributes
       }
-    },
-    method: function(callback, context){
-      return this.each.keyValues.apply(this, arguments);
     }
   })
   
@@ -1644,7 +1707,7 @@ t.object = function(){ var o = t.internal.object; return o.create.apply(o, argum
  * Theory also doesn't implement any class-like inheritance, perfering to opt for
  * the mixin / borrow approach. This comes from the perspective that the real creative power 
  * behind JavaScript is to share objects and methods. To be flexible, sketchable and extensible
- * as much as possible. Whilst this may fly in the face of specific runtime optimisations --
+ * as much as possible. Whilst this may fly in the face of specific runtime optimisations -- 
  * those that can be gained through using prototyped constructors and hidden classes -- I have 
  * yet to come across a situation where I have needed that kind of speed.
  *
@@ -1660,12 +1723,6 @@ t.object = function(){ var o = t.internal.object; return o.create.apply(o, argum
  * - **prep** -- if no method supplied, a default is added.
  * - **create** -- if no method supplied, a default is added.
  * - **theory** -- if this subobject exists, traverse and apply what it describes to the constructor.
- *
- * > NOTE: Nearly every creator within Theory's codebase is designed to operate in a chainable
- *   manner i.e. like jQuery. This works for everything that handles a process, but
- *   not for methods that return actual data. For those methods, Theory implements
- *   a naming convention guideline. Any method that returns data, should be prefixed
- *   with `get` i.e. `getItems`, `getData`, `getCallback`.
  *
  * ###### Create method
  *
@@ -3008,45 +3065,6 @@ t.apis['0.1'] = (function(t){
   */
   
   /*
-   *
-   */
-  String.prototype.contains = function(v){
-    return this.indexOf(v) != -1;
-  }
-  
-  /*
-   * Simple indexOf implementation that takes into account possible escape characters.
-   */
-  !String.prototype.indexOfEscapable &&
-  (String.prototype.indexOfEscapable = function(needle, offset, escape){
-    var p = (offset||0)-1, k, e; !escape && (escape = '\\');
-    while ( (k=p=this.indexOf(needle, p+1)) != -1 ) {
-      e = 0; while ( this.charAt(--k) === escape ) {e++}
-      if ( !e || !(e&1) ) { break; }
-    }
-    return p;
-  });
-  
-  /*
-   * Simple check to match a particular char offset against an array of chars.
-   */
-  !String.prototype.charIs &&
-  (String.prototype.charIs = function( string, offset, needles ){
-    if ( offset < -1 ) {
-      offset = string.length + offset;
-    }
-    return needles.indexOf( string.charAt(offset) ) != -1;
-  });
-
-  /*
-   * JavaScript really should have this built-in by now!
-   */
-  !String.prototype.trim &&
-  (String.prototype.trim = function( string ){
-    return string.replace(/^\s+|\s+$/g, '');
-  });
-  
-  /*
    * If Object.keys exist, surely this should too?
    */
   Object.values = function(obj, filter){
@@ -3916,11 +3934,14 @@ theory.dom = t.dom || t.creator.callable({
   },
   
   /**
+   * @memberof! theory.dom
    * @borrows theory.array.source as theory.dom.source
+   * @see theory.array.source
    */
   source: t.internal.array.source,
   
   /**
+   * @memberof! theory.dom
    * @borrows theory.array.each as theory.dom.each
    */
   each: t.internal.array.each,
@@ -4030,6 +4051,11 @@ theory.scripts = {
       /// @TODO: nodejs version
     }
   }
+  
+};
+
+/// @TODO:
+t.include = function(src){
   
 };
 

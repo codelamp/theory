@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Theory - Demo page</title>
+<link rel="shortcut icon" type="image/png" href="docs/theme/static/favicon-x16.png" />
+<script type="text/javascript" src="test/firebug-lite/build/firebug-lite.js#overrideConsole=1,startOpened=1,enableTrace=1"></script>
+<script src="bin/is.js"></script>
+<script src="bin/theory.js"></script>
+</head>
+<body>
+<!-- some elements to play with //-->
+<div>
+  <h1>Theory - Demo Page</h1>
+  <p>Just to test Theory behaviour.</p>
+  <span class="name" data-test="123a"></span>
+  <table><tr><td><span data-test="abc 123">hahah</span></td></tr></table>
+</div>
+<script>
+
+var a = t.dom.findSimple('table', 'td', ['@data-test', '~=', '123']);
+console.log(a);
+
+</script>
+<!--
+<script src="is.js"></script>
+<script src="theory.js" defer="defer" data-t-name="theory" data-t-includes="string, navigate"></script>
+<noscript data-defered-until="theory">
+<script></script>
+<noscript>
+//-->
+</body>
+</html>

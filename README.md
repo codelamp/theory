@@ -121,6 +121,10 @@ Next you just need to execute the following in `$THEORY_DIR`.
 
 That should run each of the specs and report whether everything is running ok.
 
+To view the live tests, go here:
+
+[http://codelamp.github.io/theory/tests.html](http://codelamp.github.io/theory/tests.html)
+
 ### Documentation
 
 Next up is documentation. To run the documentation site locally you'll need to run the following:

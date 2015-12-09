@@ -455,10 +455,10 @@ document.body && (function(elm){
   elm.innerHTML = [
     '<nav id="theory">',
       '<div class="center">',
-        '<a href="#objecttheory" class="object-theory"><img src="images/bubble-object-theory.png" height="147" border="0" width="216"></a>',
         '<a href="#stringtheory" class="string-theory"><img src="images/bubble-string-theory.png" height="147" border="0" width="216"></a>',
         '<a href="#creatortheory" class="creator-theory"><img src="images/bubble-creator-theory.png" height="147" border="0" width="216"></a>',
         '<a href="#overloadtheory" class="overload-theory"><img src="images/bubble-overload-theory.png" height="147" border="0" width="216"></a>',
+        '<a href="#objecttheory" class="object-theory"><img src="images/bubble-object-theory.png" height="147" border="0" width="216"></a>',
       '</div>',
     '</nav>',
     '<hr >'

@@ -315,7 +315,7 @@ A `new Error()` is thrown if the method is called with arguments it doesn't unde
 
 ### Taking it further
 
-I have extended the base functionality outlined above with modules, these can be found under `t.overload.descProcessors`.
+I have extended the base functionality outlined above with modules, these can be found under {@linkcode theory.overload.descProcessors}.
 
 These work on the description object that is passed in, processing it, and returning something modified. This means that a lot of the work that goes into these additional extras is calculated when you define your overloaded methods (and not at call time).
 

@@ -23,10 +23,11 @@
 <div id="main">
     <?js if(title) { ?>
     <h1 class="page-title">
+      <?js if ( title.indexOf('Namespace:') != -1 ) { title = 'Namespace'; } ?>
       <?js= title ?>
       <?js if(subtitle) { ?>
         <sup style="font-size: 0.5em; letter-spacing: 2px; margin-left: 10px;"><?js= subtitle ?></sup>
-      <?js } ?>  
+      <?js } ?>
     </h1>
     <?js } ?>
     <?js= content ?>

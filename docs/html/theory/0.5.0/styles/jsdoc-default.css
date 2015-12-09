@@ -488,6 +488,6 @@ blockquote p:last-child::after {
   padding: 2px;
 }
 
-nav#menu ul {
+nav#menu > ul {
   font-size: 90%;
 }

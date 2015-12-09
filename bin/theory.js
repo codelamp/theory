@@ -1277,6 +1277,8 @@ theory.overload.callItem = function(desc, item, context, args, hops){
  *
  *  - `desc` is the entire description object
  *  - `internal` is a provided storage object, per description but separate from description
+ * 
+ * > It should be noted that the order of processors can change expected outcomes. Shift the orders only if you know what you are doing.
  *
  * @memberof! theory.overload
  * @namespace

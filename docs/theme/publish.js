@@ -293,20 +293,56 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
     var nav = '';
 
     if (items.length) {
-        var itemsNav = '';
-
-        items.forEach(function(item) {
-            if ( !hasOwnProp.call(item, 'longname') ) {
-                itemsNav += '<li>' + linktoFn('', item.name) + '</li>';
+        
+        items = items.sort(function(a, b){ return a.longname > b.longname ? 1 : -1 });
+        
+        var generateLI = function(item){
+          if ( !hasOwnProp.call(item, 'longname') ) {
+            return linktoFn('', item.name);
+          }
+          else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
+            itemsSeen[item.longname] = true;
+            return linktoFn(item.longname, item.longname.replace(/^module:/, ''));
+          }
+        };
+        
+        var generateLIs = function(obj, prefix, suffix){
+          var result = '';
+          obj.prefix && (result += obj.prefix);
+          obj.html   && (result += '<span>' + obj.html + '</span>');
+          if ( obj.children && obj.children['#length'] ) {
+            for ( var key in obj.children ) {
+              if ( key.charAt(0) === '#' ) continue;
+              result += generateLIs(obj.children[key], '<ul>', '</ul>');
             }
-            else if ( !hasOwnProp.call(itemsSeen, item.longname) ) {
-                itemsNav += '<li>' + linktoFn(item.longname, item.longname.replace(/^module:/, '')) + '</li>';
-                itemsSeen[item.longname] = true;
+          }
+          obj.suffix && (result += obj.suffix);
+          return result ? (prefix||'') + result + (suffix||'') : result;
+        };
+        
+        var lookup = {prefix:'', suffix: ''};
+        items.forEach(function(item){
+          var head = lookup, bits = item.longname.split('.'), lastBit = bits.length - 1;
+          bits.forEach(function(bit, i){
+            if ( !head ) { return; }
+            if ( i === lastBit ) {
+              !head.children      && (head.children = {'#length': 0});
+              !head.children[bit] && (head.children[bit] = {});
+              head.children[bit].prefix = '<li>';
+              head.children[bit].suffix = '</li>';
+              head.children[bit].html = generateLI(item);
+              head.children['#length'] ++;
+              head = head.children[bit];
             }
+            !head.children      && (head.children = {'#length': 0});
+            !head.children[bit] && (head.children[bit] = {});
+            head.children['#length'] ++;
+            head = head.children[bit];
+          });
         });
-
-        if (itemsNav !== '') {
-            nav += '<h3>' + itemHeading + '</h3><ul>' + itemsNav + '</ul>';
+        
+        if (lookup.children['#length']) {
+          nav += '<h3>' + itemHeading + '</h3>' + generateLIs(lookup);
         }
     }
 

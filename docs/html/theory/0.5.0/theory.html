@@ -126,6 +126,9 @@ the above aims in a stand-alone capacity.</p></div>
         <h3 class="subsection-title">Namespaces</h3>
 
         <dl>
+            <dt><a href="theory.overload.html">theory.overload</a></dt>
+            <dd></dd>
+        
             <dt><a href="theory.creator.html">theory.creator</a></dt>
             <dd></dd>
         
@@ -1315,7 +1318,7 @@ default to <code>t.global</code>.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line185">line 185</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line187">line 187</a>
     </li></ul></dd>
     
 
@@ -1323,6 +1326,13 @@ default to <code>t.global</code>.</p>
 
     
 
+    
+    <dt class="tag-todo">To Do</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>expose the description object in some way from the returned method, although don't call it ".description" because that interfered with the `.namespace()` code</li>
+        </ul>
+    </dd>
     
 </dl>
 </div>
@@ -1361,21 +1371,13 @@ default to <code>t.global</code>.</p>
 
 
     
-    <h4 class="name" id=".overload">theory.overload<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
+    <h4 class="name" id=".define">theory.define<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
     
 
 
 
 <div class="description">
-    <p>Simplistic, readable but most of all quick overloading.</p>
-<h5>Inner workings</h5><p>The resulting method returned uses a lookup object to match calling 
-arguments to a destination function. So the main overhead with 
-this approach is the type checking on each argument.</p>
-<p>The type checking is performed by <a href="is.html#...what.type"><code>is.what.type</code></a></p>
-<h5>Named parameters</h5><p>When introducing named parameters there is an extra overhead, whereby
-the arguments array is translated to an object with named keys. But
-whilst this is extra processing, it can make your resulting function
-much nicer to work with.</p>
+    <p>A wrapped implementation of defineProperty.</p>
 </div>
 
 
@@ -1386,37 +1388,6 @@ much nicer to work with.</p>
 
 
 
-
-
-    <h5>Examples</h5>
-
-<pre class="prettyprint"><code>method = t.overload({
-  '[array]': function(list){
-    // simple overload based on types
-  },
-  '[array, object]': function(list, options){
-    // each denoted function will only be called if types match
-  }
-});</code></pre>
-
-<pre class="prettyprint"><code>method = t.overload({
-  '[array] [object]?': function(list, options){
-    // overload with optional arguments
-  },
-  '[object] [number]?': function(list, delay){
-    // this creates lookups for [array], [array, object], [object] and [object, number]
-  }
-});</code></pre>
-
-<pre class="prettyprint"><code>method = t.overload({
-  '[array:list]': function(args){
-    // simple named overloads
-  },
-  '[array:list, object:options]': function(args){
-    // arguments are translated to an object with named keys
-    // i.e. args.list, args.options
-  }
-});</code></pre>
 
 
 
@@ -1454,7 +1425,7 @@ much nicer to work with.</p>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line388">line 388</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line247">line 247</a>
     </li></ul></dd>
     
 
@@ -1463,12 +1434,171 @@ much nicer to work with.</p>
     
 
     
-    <dt class="tag-todo">To Do</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>optimisations could be implemented in terms of argument counts.</li>
-        </ul>
-    </dd>
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".bindCollection">theory.bindCollection<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Bind a group of items to one context</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line273">line 273</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            <div class="method-wrapper">
+
+
+    
+    <h4 class="name" id=".unbind">theory.unbind<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    
+
+
+
+<div class="description">
+    <p>Unbind a specific bound method, bound by t.bind</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="details-wrapper">
+<h5>Details</h5>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line303">line 303</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
     
 </dl>
 </div>
@@ -1553,7 +1683,7 @@ console.log(a === b, a.a === c.a, a.a.b.c === c.a.b.c); // false, false, false</
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line489">line 489</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line507">line 507</a>
     </li></ul></dd>
     
 
@@ -1596,13 +1726,13 @@ console.log(a === b, a.a === c.a, a.a.b.c === c.a.b.c); // false, false, false</
   <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
 </div>
 <nav id="menu">
-    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.overload.html">theory.overload</a></li><li><a href="theory.overload.descProcessors.html">theory.overload.descProcessors</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 11:32:09 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Dec 09 2015 16:05:17 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

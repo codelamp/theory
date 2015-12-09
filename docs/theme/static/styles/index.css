@@ -39,17 +39,19 @@ nav#theory a img {
   visibility: hidden;
 }
 
-nav#theory a.eventTheory { background: url(../images/bubble-eventtheory.png) no-repeat top left; }
-nav#theory a.arrayTheory { background: url(../images/bubble-arraytheory.png) no-repeat top left; }
-nav#theory a.objectTheory { background: url(../images/bubble-objecttheory.png) no-repeat top left; }
-nav#theory a.stringTheory { background: url(../images/bubble-stringtheory.png) no-repeat top left; }
-nav#theory a.creatorTheory { background: url(../images/bubble-creatortheory.png) no-repeat top left; }
+nav#theory a.event-theory    { background: url(../images/bubble-event-theory.png) no-repeat top left; }
+nav#theory a.array-theory    { background: url(../images/bubble-array-theory.png) no-repeat top left; }
+nav#theory a.object-theory   { background: url(../images/bubble-object-theory.png) no-repeat top left; }
+nav#theory a.string-theory   { background: url(../images/bubble-string-theory.png) no-repeat top left; }
+nav#theory a.creator-theory  { background: url(../images/bubble-creator-theory.png) no-repeat top left; }
+nav#theory a.overload-theory { background: url(../images/bubble-overload-theory.png) no-repeat top left; }
 
-nav#theory a.eventTheory:hover, nav#theory a.eventTheory:focus { background: url(../images/bubble-eventtheory-z.png) no-repeat top left; }
-nav#theory a.arrayTheory:hover, nav#theory a.arrayTheory:focus { background: url(../images/bubble-arraytheory-z.png) no-repeat top left; }
-nav#theory a.objectTheory:hover, nav#theory a.objectTheory:focus { background: url(../images/bubble-objecttheory-z.png) no-repeat top left; }
-nav#theory a.stringTheory:hover, nav#theory a.stringTheory:focus { background: url(../images/bubble-stringtheory-z.png) no-repeat top left; }
-nav#theory a.creatorTheory:hover, nav#theory a.creatorTheory:focus { background: url(../images/bubble-creatortheory-z.png) no-repeat top left; }
+nav#theory a.event-theory:hover, nav#theory a.event-theory:focus       { background: url(../images/bubble-event-theory-z.png) no-repeat top left; }
+nav#theory a.array-theory:hover, nav#theory a.array-theory:focus       { background: url(../images/bubble-array-theory-z.png) no-repeat top left; }
+nav#theory a.object-theory:hover, nav#theory a.object-theory:focus     { background: url(../images/bubble-object-theory-z.png) no-repeat top left; }
+nav#theory a.string-theory:hover, nav#theory a.string-theory:focus     { background: url(../images/bubble-string-theory-z.png) no-repeat top left; }
+nav#theory a.creator-theory:hover, nav#theory a.creator-theory:focus   { background: url(../images/bubble-creator-theory-z.png) no-repeat top left; }
+nav#theory a.overload-theory:hover, nav#theory a.overload-theory:focus { background: url(../images/bubble-overload-theory-z.png) no-repeat top left; }
 
 nav#theory a:nth-child(2), nav#theory a:nth-child(3) {
   top: -10px;

@@ -21,7 +21,7 @@
 <div id="main">
     
     <h1 class="page-title">
-      Namespace: theory.object.each
+      Namespace: theory.overload.descProcessors
         
     </h1>
     
@@ -35,9 +35,9 @@
 <header>
     
         <h2>
-            <span class="ancestors"><a href="theory.html">theory</a><a href="theory.object.html">.object</a>.</span>
+            <span class="ancestors"><a href="theory.html">theory</a><a href="theory.overload.html">.overload</a></span>
         
-        each
+        .descProcessors
         </h2>
         
     
@@ -47,8 +47,16 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Handles usual expected <code>.each()</code> behaviour for objects, but also
-contains a number of more specific each-like methods.</p></div>
+            <div class="description"><p>Overload description processors allow the overload behaviour to 
+be extended.</p>
+<p>These should make changes to the description object before being 
+handed to the item processors.</p>
+<p>You can add your own processor by .push()-ing a method to this
+array. The method should have the following signature:</p>
+<pre class="prettyprint source"><code>function(desc, internal) {}</code></pre><ul>
+<li><code>desc</code> is the entire description object</li>
+<li><code>internal</code> is a provided storage object, per description but separate from description</li>
+</ul></div>
         
 
         
@@ -85,7 +93,7 @@ contains a number of more specific each-like methods.</p></div>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1641">line 1641</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1284">line 1284</a>
     </li></ul></dd>
     
 
@@ -121,10 +129,22 @@ contains a number of more specific each-like methods.</p></div>
 
 
     
-    <h4 class="name" id="..___callable">theory.object.each<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    <h4 class="name" id=".inlineNames">theory.overload.descProcessors.inlineNames<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
     
 
 
+
+<div class="description">
+    <p>Inline names allows for a more succint way of naming params.</p>
+<p>So rather than:</p>
+<pre class="prettyprint source"><code>[array, callable, number] > [list, callback, delay]</code></pre><p>You can use:</p>
+<pre class="prettyprint source"><code>[array:list, callable:callback, number:delay]</code></pre><p>It is personal preference which is prefered for readability.
+However, inline names are less prone to typing mistakes.
+Especially if you start using optional parameters, for
+example:</p>
+<pre class="prettyprint source"><code>[array][callable, number]? > [list][callback, delay]?</code></pre><p>Would be:</p>
+<pre class="prettyprint source"><code> [array:list][callable:callback, number:delay]?</code></pre>
+</div>
 
 
 
@@ -171,7 +191,7 @@ contains a number of more specific each-like methods.</p></div>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1642">line 1642</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1311">line 1311</a>
     </li></ul></dd>
     
 
@@ -200,10 +220,27 @@ contains a number of more specific each-like methods.</p></div>
 
 
     
-    <h4 class="name" id=".key">theory.object.each.key<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    <h4 class="name" id=".translateToArgsObject">theory.overload.descProcessors.translateToArgsObject<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
     
 
 
+
+<div class="description">
+    <p>translateToArgsObject allows methods defined to receive
+an args object with named attributes, instead of a list 
+of params.</p>
+<p>For example:</p>
+<pre class="prettyprint source"><code>var test = t.overload({
+  '[array, callable] > [list, callback]': function(args){
+    console.log(args)
+  };
+});
+
+test([123], function(){});</code></pre><p>Would produce the following in the console:</p>
+<pre class="prettyprint source"><code>{ list: [123], callback: function(){} }</code></pre><p>I personally prefer the readability of the above to
+that of the colon syntax with Inline Names. However, it
+can get a bit verbose.</p>
+</div>
 
 
 
@@ -250,7 +287,7 @@ contains a number of more specific each-like methods.</p></div>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1665">line 1665</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1357">line 1357</a>
     </li></ul></dd>
     
 
@@ -279,10 +316,15 @@ contains a number of more specific each-like methods.</p></div>
 
 
     
-    <h4 class="name" id=".value">theory.object.each.value<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    <h4 class="name" id=".alternativeKeys">theory.overload.descProcessors.alternativeKeys<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
     
 
 
+
+<div class="description">
+    <p>Alternative Keys gives support for the following key notation:</p>
+<pre class="prettyprint source"><code>[array, object|string]</code></pre>
+</div>
 
 
 
@@ -329,7 +371,7 @@ contains a number of more specific each-like methods.</p></div>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1677">line 1677</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1390">line 1390</a>
     </li></ul></dd>
     
 
@@ -358,10 +400,15 @@ contains a number of more specific each-like methods.</p></div>
 
 
     
-    <h4 class="name" id=".keyValue">theory.object.each.keyValue<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
+    <h4 class="name" id=".optionalArguments">theory.overload.descProcessors.optionalArguments<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature"></span></span></h4>
     
 
 
+
+<div class="description">
+    <p>Optional Arguments gives support for the following key notation:</p>
+<pre class="prettyprint source"><code>[array, object] [string]?</code></pre>
+</div>
 
 
 
@@ -408,7 +455,7 @@ contains a number of more specific each-like methods.</p></div>
     
     <dt class="tag-source">Source</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1689">line 1689</a>
+        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1423">line 1423</a>
     </li></ul></dd>
     
 
@@ -416,264 +463,6 @@ contains a number of more specific each-like methods.</p></div>
 
     
 
-    
-</dl>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            <div class="method-wrapper">
-
-
-    
-    <h4 class="name" id=".object">theory.object.each.object<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="details-wrapper">
-<h5>Details</h5>
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1702">line 1702</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>requires completion, should step each sub object.</li>
-        </ul>
-    </dd>
-    
-</dl>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            <div class="method-wrapper">
-
-
-    
-    <h4 class="name" id=".callable">theory.object.each.callable<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="details-wrapper">
-<h5>Details</h5>
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1710">line 1710</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>requires completion, should step each callable sub item.</li>
-        </ul>
-    </dd>
-    
-</dl>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            <div class="method-wrapper">
-
-
-    
-    <h4 class="name" id=".attribute">theory.object.each.attribute<span class="signature">()</span><span class="type-signature"></span> <span class="attributes"><span class="type-signature">(static) </span></span></h4>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="details-wrapper">
-<h5>Details</h5>
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="theory.js.html">theory.js</a>, <a href="theory.js.html#line1718">line 1718</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-    <dt class="tag-todo">To Do</dt>
-    <dd class="tag-todo">
-        <ul>
-            <li>requires completion, should step each non-object sub item.</li>
-        </ul>
-    </dd>
     
 </dl>
 </div>

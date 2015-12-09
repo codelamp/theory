@@ -125,6 +125,9 @@ console.log(theory, 'is read now');
 <pre class="prettyprint source"><code>karma start</code></pre><p>That should run each of the specs and report whether everything is running ok.</p>
 <p>To view the live tests, go here:</p>
 <p><a href="http://codelamp.github.io/theory/tests.html">http://codelamp.github.io/theory/tests.html</a></p>
+<h3>Code Coverage</h3><p>This is powered by <a href="http://karma-runner.github.io">Karma</a> and <a href="https://www.npmjs.com/package/karma-istanbul-reporter">Istanbul</a>.</p>
+<p>The current output for this version of the repo lies here:</p>
+<p><a href="http://codelamp.github.io/theory/docs/html/theory/0.5.0/coverage">http://codelamp.github.io/theory/docs/html/theory/0.5.0/coverage</a></p>
 <h3>Documentation</h3><p>Next up is documentation. To run the documentation site locally you'll need to run the following:</p>
 <pre class="prettyprint source"><code>./docs/serve.sh</code></pre><p>To re-build the documentation:</p>
 <pre class="prettyprint source"><code>./docs/make.sh</code></pre><p>To view the live documentation, go here:</p>
@@ -194,6 +197,119 @@ console.log(theory, 'is read now');
 <hr>
 <h2>Creator Theory</h2><p>I need to write a nice section about this, but for the meantime, you can read here <a href="theory.creator.html"><code>theory.creator</code></a></p>
 <hr>
+<h2>Overload Theory</h2><p>Despite the fact that I really do like JavaScript — I am impervious to your mockery that once was, or perhaps still is ;) — like every language, there are things I would change.</p>
+<p>One of these changes would be to give JavaScript better handling of function arguments.</p>
+<p>Support for abilities like default, orderless and remaining parameters would be great. Thankfully it seems — from what I have read — the up coming changes to JavaScript (ECMAScript 2015 / ES6) look promising. Unfortunately it is going to take a while before any of these abilities can be relied upon.</p>
+<ol>
+<li><a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Functions/default_parameters">Default Parameters</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters">Remaining Parameters</a> a.k.a. <code>... rest</code> parameters</li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Function_argument_defaults">Orderless Parameters</a> a.k.a. Function argument defaults</li>
+</ol>
+<p>Theory has existed — in some form — within my own private codings for a while, since 2010. And within that code there has always been some form of another ability I would like JavaScript to have...</p>
+<h3>Overloaded methods</h3><p>Now I've read a lot on the subject of &quot;overloaded methods&quot; with JavaScript, and as with anything, there are a lot of opinions.</p>
+<p>Take this Stack Overflow post as an example, <a href="http://stackoverflow.com/questions/456177/function-overloading-in-javascript-best-practices">Function Overloading in JavaScript best practices</a></p>
+<p>The opinions can be (pretty much) split in to:</p>
+<ol>
+<li>It does not exist for JavaScript.</li>
+<li>It will be too slow.</li>
+<li>Just do it based on number of arguments.</li>
+<li>Pass an object to your method, and test for certain properties.</li>
+<li>Use specific type checking within the function.</li>
+</ol>
+<p><strong>The first point is just being pedantic about the naming of it.</strong> Yes, compile-time method overloading doesn't exist. From here on in, I am referring to &quot;overloading-like&quot; behaviour. That is, the same method name can be called, but provide different behaviour depending on the type of arguments passed. It provides this behaviour either within itself or delegates to other grouped methods.</p>
+<p><strong>The second point about things being too slow, is relative.</strong> It really depends on what you need to achieve with your code. Any additional code you add to a system causes a slow-down. Which means you could argue that adding any feature hampers performance. Personally I prefer quick sketch-ability and readability of code, which you can later optimise if the project you are working on requires it.</p>
+<p><strong>The third point does work.</strong> In fact I believe it is used in a number of well know libraries e.g. jQuery. However, my main reason for wanting &quot;overloading-like&quot; behaviour has been that one of my arguments may change type. That isn't covered by the &quot;count the arguments&quot; approach. I also find that prefixing a bunch of logic to the start of the function, just to manage type detection, as rather ugly and unreadable.</p>
+<p><strong>Point four is useful.</strong> For certain functions or parameters this can work well e.g. <code>method({name: 'string', list: [], options: {}});</code>. There are downsides however. If you change your parameters in the function, you have to change the calling code too. It can be a bit laborious having to construct an object for each of your method calls. Plus it does have overheads.</p>
+<p><strong>Point five is pretty much what you are left with.</strong> And whilst checking the type of parameters at call-time will be slower than not doing so. I personally believe the benefits in simplicity of the higher-level code are worth it; as long as the ability isn't used for methods that are called in high frequency. The problem is the implementations I've seen of this method tend to hamper readability.</p>
+<p>With Theory I like to think I've implemented it in a nice way. But I'm sure there will be coders out there that will be horrified. My main aim has been to separate out the overloading specification from the code itself, as I believe this aids readability.</p>
+<h3>How it works</h3><p><code>t.overload</code> is quite simple to use, an example would be:</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string, array]': function(name, list){
+    // simple overload based on types
+  },
+  '[array, object]': function(list, options){
+    // each denoted function will only be called if types match exactly
+  },
+  '[string, array, object]': function(name, list, options){
+    // currently there aren't many optimisations, but the plan is to be intelligent
+    // if the overloads are unique based on their number of arguments -- this could
+    // be automatically switched to. If the overloads are only based on a specific
+    // parameter changing, the internal code could be made to focus on this.
+  }
+});</code></pre><p>When <code>method()</code> is called, the arguments that are passed are converted to a string key e.g. <code>&quot;[number, number]&quot;</code> — through a mixture of duck typing and constructor checking. This is then used to look-up the method to call on the description object.</p>
+<p>A <code>new Error()</code> is thrown if the method is called with arguments it doesn't understand i.e. a key can't be found on the description object.</p>
+<p><code>t.overload</code> converts parameters to types using <code>is.what()</code>, which can be extended or changed quite easily. It is also a key place to develop optimisations in the future.</p>
+<h3>Taking it further</h3><p>I have extended the base functionality outlined above with modules, these can be found under <code>t.overload.descProcessors</code>.</p>
+<p>These work on the description object that is passed in, processing it, and returning something modified. This means that a lot of the work that goes into these additional extras is calculated when you define your overloaded methods (and not at call time).</p>
+<p>Current <code>descProcessors</code> are:</p>
+<ol>
+<li>inlineNames</li>
+<li>translateToArgsObject</li>
+<li>alternativeKeys</li>
+<li>optionalArguments</li>
+</ol>
+<h3>Inline Names &amp; Translate To Args Object</h3><p>These two modules work in harmony and allows you to define your parameter names in a way that <code>t.overload</code> can understand:</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string:name, array:list]': function(args){
+    // here we should have args.name and args.list
+  },
+  '[array:list, object:options]': function(args){
+    // here we should have args.list and args.options
+  }
+});</code></pre><p>This means that the function receives an object with a property for each named parameter that was passed in.</p>
+<p><i class="fa fa-info-circle"></i>&nbsp; With the current codebase, the object that is passed in as <code>args</code> is always a newly created object. However, based upon recent reading I may switch this to be an object that is reused (for optimisation reasons).</p>
+<p><i class="fa fa-info-circle"></i>&nbsp; It should be noted that the string parsing that occurs within <code>t.overload</code> has not been heavily tested with the aim to break the system. I'm sure it would be very easy to find parameter names that should work, but that trip errors. This is the kind of work I will be putting in as I travel towards <a href="https://github.com/codelamp/theory/milestones/v1.0.0">v1.0.1</a></p>
+<blockquote>
+<p>This might seem an odd choice, but stick with me. Again, I'm sure there will be shudders elsewhere on the interweb.</p>
+</blockquote>
+<h3>Alternative Keys</h3><p>The downside to being specific with types is that <em>you have to be specific</em>.</p>
+<p>Especially in the way that <code>t.overload</code> works, if your look-up key doesn't exist in the overload description, then you get an error. For example:</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string]': function(args){},
+  '[array]': function(args){}
+});
+method({}); // would trip an Error.</code></pre><p>This is completely opposite to the way that JavaScript normally works.</p>
+<p>Unfortunately I'm still working towards a wildcard option. E.g.</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string]': function(arg){},
+  '[array]': function(arg){},
+  '[*]': function(arg){}
+});</code></pre><p>But this will require me to add more optimisation logic into <code>t.overload</code> which I don't have time for just yet. I'd rather hold off and implement it properly, than add a very involved or slow method now.</p>
+<p>For now, the Alternative Keys module provides a way to be more flexible with types instead.</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string|object|array]': function(oneOfThree){},
+});</code></pre><p>The above will allow you to pass in strings, literal objects or arrays to the same parameter.</p>
+<p>When the function is constructed by <code>t.overload</code>, this module steps in a basically converts the description object to:</p>
+<pre class="prettyprint source"><code>{
+  '[string]': function(oneOfThree){},
+  '[object]': function(oneOfThree){},
+  '[array]': function(oneOfThree){},
+}</code></pre><p>Where the function is the same reference i.e. the same function.</p>
+<h3>Optional Arguments</h3><p>Another issue with being specific, is that we've lost the ability to have optional parameters. This module brings them back.</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string] [object]?': function(name, options){
+    // in here options will be optional
+  }
+});</code></pre><p>This operates in a similar way to the Alternative Keys module, in that it modifies the overload description like so:</p>
+<pre class="prettyprint source"><code>{
+  '[string]': function(name, options){},
+  '[string, object]': function(name, options){}
+}</code></pre><p>Each function above is referencing the same function.</p>
+<p>You can have as many optional groups, with as many parameters, as you like. Just bear in mind, the more parameters, the more types that are checked.</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string] [object]? [number]?': function(name, options, delay){
+    // in here options will be optional
+  }
+});</code></pre><p><i class="fa fa-info-circle"></i>&nbsp;As with all optional arguments, the optional parameters must come after the require parameters. Currently there is no coded check for this however — and I'm not entirely sure what would happen if you didn't adhere to this. Probably nothing good.</p>
+<p>Those of you who are awake, may ask what does this do?</p>
+<pre class="prettyprint source"><code>var method = t.overload({
+  '[string] [object, number]? [array]?': function(name, options, delay, list){}
+});</code></pre><p>The answer is:</p>
+<pre class="prettyprint source"><code>{
+  '[string]': function(name, options, delay, list){},
+  '[string, object, number]': function(name, options, delay, list){},
+  '[string, object, number, array]': function(name, options, delay, list){}
+}</code></pre><hr>
 <script>
 document.querySelectorAll && (function(titles){
   var text;
@@ -214,9 +330,10 @@ document.body && (function(elm){
   elm.innerHTML = [
     '<nav id="theory">',
       '<div class="center">',
-        '<a href="#objecttheory" class="objectTheory"><img src="images/bubble-objecttheory.png" height="147" border="0" width="216"></a>',
-        '<a href="#stringtheory" class="stringTheory"><img src="images/bubble-stringtheory.png" height="147" border="0" width="216"></a>',
-        '<a href="#creatortheory" class="creatorTheory"><img src="images/bubble-creatortheory.png" height="147" border="0" width="216"></a>',
+        '<a href="#objecttheory" class="object-theory"><img src="images/bubble-object-theory.png" height="147" border="0" width="216"></a>',
+        '<a href="#stringtheory" class="string-theory"><img src="images/bubble-string-theory.png" height="147" border="0" width="216"></a>',
+        '<a href="#creatortheory" class="creator-theory"><img src="images/bubble-creator-theory.png" height="147" border="0" width="216"></a>',
+        '<a href="#overloadtheory" class="overload-theory"><img src="images/bubble-overload-theory.png" height="147" border="0" width="216"></a>',
       '</div>',
     '</nav>',
     '<hr >'
@@ -236,13 +353,13 @@ document.body && (function(elm){
   <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
 </div>
 <nav id="menu">
-    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.overload.html">theory.overload</a></li><li><a href="theory.overload.descProcessors.html">theory.overload.descProcessors</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 11:32:09 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Dec 09 2015 16:05:17 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>

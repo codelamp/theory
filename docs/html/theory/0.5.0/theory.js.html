@@ -215,6 +215,8 @@ theory = t = {
    * @param {Object} context
    * @param {Object} attribute
    * @return {Function} A formulated method that handles requested abilities and ultimately calls any code passed in via `desc`.
+   *
+   * @todo expose the description object in some way from the returned method, although don't call it ".description" because that interfered with the `.namespace()` code 
    */
   method: function(desc, context, attribute){
     var method, argsToArray = Array.prototype.slice, argsHandler;
@@ -268,15 +270,13 @@ theory = t = {
     if ( is.callable(desc.after) ) {
       desc.after(desc);
     }
-    /// expose this to allow for other clever things later
-    /// true, the may slow down newer browser environments that
-    /// don't like you to change objects from their base class
-    /// but JavaScript is made to be sketchable.
-    //method.description = function(){ console.log('ABC'); return desc; }; &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;-----------
     return method;
   },
-  /*
+  /**
+   * A wrapped implementation of defineProperty.
    *
+   * @memberof! theory
+   * @method
    */
   define: function(context, attribute, desc){
     if ( !Object.defineProperty ) return false;
@@ -285,6 +285,9 @@ theory = t = {
   
   /*
    * Simple binding method
+   *
+   * @memberof! theory
+   * @method
    */
   bind: function( method, context ){
     var f = function(){
@@ -295,8 +298,11 @@ theory = t = {
     return f;
   },
   
-  /*
+  /**
    * Bind a group of items to one context
+   *
+   * @memberof! theory
+   * @method
    */
   bindCollection: function( collection, context, collect ){
     var i, bound = collect || {};
@@ -314,14 +320,19 @@ theory = t = {
   },
   
   /*
-   * @TODO:
+   * Bind layered collections all at once.
+   *
+   * @memberof! theory
+   * @method
+   * @todo this needs implentation -- or deletion.
    */
-  bindCollectionRecursive: function(){
-    
-  },
+  bindCollectionRecursive: function(){},
   
-  /*
+  /**
    * Unbind a specific bound method, bound by t.bind
+   *
+   * @memberof! theory
+   * @method
    */
   unbind: function( method ){
     if ( method.bound ) {
@@ -366,60 +377,79 @@ theory = t = {
 };
 
 /**
- * Simplistic, readable but most of all quick overloading.
- *
- * ##### Inner workings
- *
- * The resulting method returned uses a lookup object to match calling 
- * arguments to a destination function. So the main overhead with 
- * this approach is the type checking on each argument.
- *
- * The type checking is performed by {@linkcode is.what.type}
- *
- * ##### Named parameters
- *
- * When introducing named parameters there is an extra overhead, whereby
- * the arguments array is translated to an object with named keys. But
- * whilst this is extra processing, it can make your resulting function
- * much nicer to work with.
- *
- * @todo optimisations could be implemented in terms of argument counts.
- *
- * @example
- * method = t.overload({
- *   '[array]': function(list){
- *     // simple overload based on types
- *   },
- *   '[array, object]': function(list, options){
- *     // each denoted function will only be called if types match
- *   }
- * });
- *
- * @example
- * method = t.overload({
- *   '[array] [object]?': function(list, options){
- *     // overload with optional arguments
- *   },
- *   '[object] [number]?': function(list, delay){
- *     // this creates lookups for [array], [array, object], [object] and [object, number]
- *   }
- * });
- *
- * @example
- * method = t.overload({
- *   '[array:list]': function(args){
- *     // simple named overloads
- *   },
- *   '[array:list, object:options]': function(args){
- *     // arguments are translated to an object with named keys
- *     // i.e. args.list, args.options
- *   }
- * });
+ * Simplistic, and pretty fast, but most of all readable function "overloading".
  *
  * @memberof! theory
- * @method
+ * @namespace
  */
 theory.overload = t.method({
+  /**
+   *
+   * ##### Inner workings
+   *
+   * The resulting method returned uses a lookup object to match calling 
+   * arguments to a destination function. So the main overhead with 
+   * this approach is the type checking on each argument.
+   *
+   * The type checking is performed by {@linkcode is.what.type}
+   *
+   * ##### Named parameters
+   *
+   * When introducing named parameters there is an extra overhead, whereby
+   * the arguments array is translated to an object with named keys. But
+   * whilst this is extra processing, it can make your resulting function
+   * much nicer to work with.
+   *
+   * @todo optimisations could be implemented in terms of argument counts.
+   *
+   * @example
+   * method = t.overload({
+   *   '[array]': function(list){
+   *     // simple overload based on types
+   *   },
+   *   '[array, object]': function(list, options){
+   *     // each denoted function will only be called if types match
+   *   }
+   * });
+   *
+   * @example
+   * method = t.overload({
+   *   '[array] [object]?': function(list, options){
+   *     // overload with optional arguments
+   *   },
+   *   '[object] [number]?': function(list, delay){
+   *     // this creates lookups for [array], [array, object], [object] and [object, number]
+   *   }
+   * });
+   *
+   * @example
+   * method = t.overload({
+   *   '[array:list]': function(args){
+   *     // simple named overloads
+   *   },
+   *   '[array:list, object:options]': function(args){
+   *     // arguments are translated to an object with named keys
+   *     // i.e. args.list, args.options
+   *   }
+   * });
+   *
+   * @memberof! theory.overload
+   * @method ___callable
+   * @param {object} desc - The overload description object
+   */
+  method: function(desc, argsHandler){
+    var self = this.overload, func = self.fallback;
+    if ( is.array(desc) ) {
+      func = self.usingList.apply(self, arguments);
+    }
+    else if ( desc &amp;&amp; desc.method ) {
+      func = self.usingObject.apply(self, arguments);
+    }
+    else {
+      func = self.usingKeys.apply(self, arguments);
+    }
+    return func;
+  },
   attributes: {
     usingObject: function(desc, argsHandler){
       console.log(123, desc); /// &lt;--------------- 
@@ -457,16 +487,17 @@ theory.overload = t.method({
      *  }
      */
     usingKeys: function(desc, argsHandler){
-      var key, a, i, l, func;
+      var key, a, i, l, func, internal = {};
       /// apply desc processors
       for ( a=t.overload.descProcessors, i=0, l=a.length; i&lt;l; i++ ) {
-        a[i].call(this, desc, {});
+        a[i].call(this, desc, internal);
       }
+      internal = {}
       /// apply the item processors in order
       for ( key in desc ) {
         if ( desc.hasOwnProperty(key) ) {
           for ( a=t.overload.itemProcessors, i=0, l=a.length; i&lt;l; i++ ) {
-            a[i].call(this, key, desc, {});
+            a[i].call(this, key, desc, internal);
           }
         }
       }
@@ -489,20 +520,7 @@ theory.overload = t.method({
     fallback: function(){
       throw new Error('overload failed to form correctly.');
     }
-  },
-  method: function(desc, argsHandler){
-    var self = this.overload, func = self.fallback;
-    if ( is.array(desc) ) {
-      func = self.usingList.apply(self, arguments);
-    }
-    else if ( desc &amp;&amp; desc.method ) {
-      func = self.usingObject.apply(self, arguments);
-    }
-    else {
-      func = self.usingKeys.apply(self, arguments);
-    }
-    return func;
-  },
+  }
   
 });
 
@@ -1180,26 +1198,28 @@ t.chain = t.wrapper(function(wrapper){
  * Specify a new config for an overload -- @TODO: is this even used now???
  *
  */
-t.overload.config = function(){
+theory.overload.config = function(){
   return Object.create(t.overload);
 };
 
-/*
+/**
  * From an array of arrays of strings, combine to form
  * all possible concatinated string outcomes.
  *
- *  i.e. ['a', ['b', 'c', 'd'], ['e', 'f']]
+ *     ['a', ['b', 'c', 'd'], ['e', 'f']]
  *
  *  would produce:
  *
- *  abe, abf, ace, acf, ade, adf
+ *     abe, abf, ace, acf, ade, adf
  *
  * WHY?? You may well ask, and if you did ask it well then...
  * This handles creating the alternative combinations
  * for keys in t.overload().
+ *
+ * @memberof! theory.overload
+ * @method
  */
-
-t.overload.allCombinations = function(bits, options){
+theory.overload.allCombinations = function(bits, options){
   if ( !options ) { options = {}; }
   if ( !options.sep ) { options.sep = ''; }
   var newfixes, prefixes = [''];
@@ -1217,31 +1237,17 @@ t.overload.allCombinations = function(bits, options){
   return newfixes || [];
 };
 
-/*
+/**
  * Split an overload key into its constituent parts
  *
- *  e.g. '[string, object]'           becomes ['string', 'object']
- *  e.g. '[string, object] [object]?' becomes ['string', 'object', 'object']
+ *  e.g. `'[string, object]'`           becomes `['string', 'object']`
  *
- * @TODO: in order for arg names to work with optional args this 
- * code should handle multiple square bracket groups
+ *  e.g. `'[string, object] [object]?'` becomes `['string', 'object', 'object']`
+ *
+ * @memberof! theory.overload
+ * @method
  */
-t.overload.parseKey = t.wrapper(function(wrapper){
-  wrapper.keyPattern = /\[([^\]]+)\]/ig;
-  wrapper.itemPattern = /, */g
-  return function(key){
-    var items = [];
-    key.replace(wrapper.keyPattern, function(outer, inner){
-      var bits = inner.split(wrapper.itemPattern);
-      for ( var i=0, l=bits.length; i&lt;l; i++ ) {
-        items.push(bits[i]);
-      }
-    });
-    return items;
-  };
-});
-/// @TODO: this replaces the above, and supports optional params
-t.overload.parseKey = t.method({
+theory.overload.parseKey = t.method({
   attributes: {
     keyPattern: /\[([^\]]+)\]/ig,
     itmPattern: /, */ig
@@ -1258,22 +1264,28 @@ t.overload.parseKey = t.method({
   }
 });
 
-/*
+/**
  * Combine any keys passed in, together.
  *
- *  E.g. extendKey('[array:list, callable:callback]', '[string:test]')
- *    // '[array:list, callable:callback, string:test]'
+ *     extendKey('[array:list, callable:callback]', '[string:test]')
+ *     // '[array:list, callable:callback, string:test]'
  *
- * @TODO: This code doesn't currently handle the keys being wrapped with []. it should.
+ * @todo This code doesn't currently handle the keys being wrapped with []. it should.
+ *
+ * @memberof! theory.overload
+ * @method
  */
-t.overload.extendKey = function(){
+theory.overload.extendKey = function(){
   return '[' + Array.prototype.slice.call(arguments, 0).join(', ') + ']';
 };
 
-/*
+/**
  * Used to call a described overload method, supports string references.
+ *
+ * @memberof! theory.overload
+ * @method
  */
-t.overload.callItem = function(desc, item, context, args, hops){
+theory.overload.callItem = function(desc, item, context, args, hops){
   if ( !hops || !is.number(hops) || hops&lt;1 ) { hops = 4; }
   if ( is.string(item) ) {
     /// loop the infinite reference of strings (limited to hops)
@@ -1285,46 +1297,54 @@ t.overload.callItem = function(desc, item, context, args, hops){
   throw new Error('Overload failed to call ' + item);
 };
 
-/*
+/**
  * Overload description processors allow the overload behaviour to 
- * be extended. These should make changes to the description object
- * before being handed to the item processors.
+ * be extended.
+ * 
+ * These should make changes to the description object before being 
+ * handed to the item processors.
  *
  * You can add your own processor by .push()-ing a method to this
  * array. The method should have the following signature:
  *
- *  function(desc, internal)
+ *     function(desc, internal) {}
  *
  *  - `desc` is the entire description object
- *  - `internal` is a provided storage object, per description item
+ *  - `internal` is a provided storage object, per description but separate from description
+ *
+ * @memberof! theory.overload
+ * @namespace
  */
-t.overload.descProcessors = new Array();
+theory.overload.descProcessors = new Array();
 
-/*
+/**
  * Inline names allows for a more succint way of naming params.
  *
  * So rather than:
  *
- *  [array, callable, number] > [list, callback, delay]
+ *     [array, callable, number] > [list, callback, delay]
  *
  * You can use:
  *
- *  e.g. [array:list, callable:callback, number:delay]
+ *     [array:list, callable:callback, number:delay]
  *
  * It is personal preference which is prefered for readability.
  * However, inline names are less prone to typing mistakes.
  * Especially if you start using optional parameters, for
  * example:
  *
- *  [array][callable, number]? > [list][callback, delay]?
+ *     [array][callable, number]? > [list][callback, delay]?
  *
  * Would be:
  *
- *  [array:list][callable:callback, number:delay]?
+ *      [array:list][callable:callback, number:delay]?
+ *
+ * @memberof! theory.overload.descProcessors
+ * @method
  */
-t.overload.descProcessors.inlineNames = t.wrapper(function(wrapper){
+theory.overload.descProcessors.inlineNames = t.wrapper(function(wrapper){
   wrapper.translatePattern = t.ExpReg(/([^\[\]\:\|\s,]+)\:([^\[\]\:\|\s,]+)/);
-  return function(desc, internal){
+  return function(desc){
     var key, bits, bit, i, l, opts = {returnResult: true}, a, b;
     for ( key in desc ) {
       if ( desc.hasOwnProperty(key) ) {
@@ -1342,29 +1362,33 @@ t.overload.descProcessors.inlineNames = t.wrapper(function(wrapper){
   };
 });
 
-/*
+/**
  * translateToArgsObject allows methods defined to receive
  * an args object with named attributes, instead of a list 
  * of params.
  *
  * For example:
  * 
- * var test = t.overload({
- *  '[array, callable] > [list, callback]': function(args){
- *    console.log(args)};
- * });
+ *     var test = t.overload({
+ *       '[array, callable] > [list, callback]': function(args){
+ *         console.log(args)
+ *       };
+ *     });
  *
- * test([123], function(){});
+ *     test([123], function(){});
  *
  * Would produce the following in the console:
  *
- * { list: [123], callback: function(){} }
+ *     { list: [123], callback: function(){} }
  *
  * I personally prefer the readability of the above to
  * that of the colon syntax with Inline Names. However, it
  * can get a bit verbose.
+ *
+ * @memberof! theory.overload.descProcessors
+ * @method
  */
-t.overload.descProcessors.translateToArgsObject = t.wrapper(function(wrapper){
+theory.overload.descProcessors.translateToArgsObject = t.wrapper(function(wrapper){
   wrapper.sepPattern = / *> */,
   wrapper.createReplacement = function(desc, names, original){
     return function(){
@@ -1389,12 +1413,15 @@ t.overload.descProcessors.translateToArgsObject = t.wrapper(function(wrapper){
   };
 })
 
-/*
+/**
  * Alternative Keys gives support for the following key notation:
  *
- *  e.g. [array, object|string]
+ *     [array, object|string]
+ *
+ * @memberof! theory.overload.descProcessors
+ * @method
  */
-t.overload.descProcessors.alternativeKeys = function(desc, internal){
+theory.overload.descProcessors.alternativeKeys = function(desc){
   var key, bits, bit, i, l;
   for ( key in desc ) {
     if ( desc.hasOwnProperty(key) ) {
@@ -1419,14 +1446,17 @@ t.overload.descProcessors.alternativeKeys = function(desc, internal){
   }
 };
 
-/*
- * Optional Arguments
+/**
+ * Optional Arguments gives support for the following key notation:
  *
- *  e.g. [array, object] [string]?
+ *     [array, object] [string]?
+ *
+ * @memberof! theory.overload.descProcessors
+ * @method
  */
-t.overload.descProcessors.optionalArguments = t.wrapper(function(wrapper){
+theory.overload.descProcessors.optionalArguments = t.wrapper(function(wrapper){
   wrapper.translatePattern = t.ExpReg(/\s*\[([^\]]+)\]\s*\??\s*/);
-  return function(desc, internal){
+  return function(desc){
     var key, basekey;
     for ( key in desc ) {
       if ( desc.hasOwnProperty(key) ) {
@@ -1644,7 +1674,7 @@ t.internal.object = {
    */
   each: t.method({
     /**
-     * @memberof!  theory.object.each
+     * @memberof! theory.object.each
      * @method ___callable
      */
     method: function(callback, context){
@@ -4113,13 +4143,13 @@ t.include = function(src){
   <a href="javascript:void(0)"><i class="fa fa-bars"></i><span>Menu</span></a>
 </div>
 <nav id="menu">
-    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
+    <h2><a href="index.html">Overview</a></h2><h3>Namespaces</h3><ul><li><a href="has.html">has</a></li><li><a href="to.html">to</a></li><li><a href="is.html">is</a></li><li><a href="theory.html">theory</a></li><li><a href="theory.overload.html">theory.overload</a></li><li><a href="theory.overload.descProcessors.html">theory.overload.descProcessors</a></li><li><a href="theory.object.each.html">theory.object.each</a></li><li><a href="theory.creator.html">theory.creator</a></li><li><a href="theory.creator.i.html">theory.creator.i</a></li><li><a href="theory.array.html">theory.array</a></li><li><a href="theory.object.html">theory.object</a></li><li><a href="theory.url.html">theory.url</a></li><li><a href="theory.dom.html">theory.dom</a></li><li><a href="theory.scripts.html">theory.scripts</a></li><li><a href="theory.string.html">theory.string</a></li><li><a href="theory.string.shared.html">theory.string.shared</a></li><li><a href="theory.string.i.html">theory.string.i</a></li><li><a href="theory.string.instructions.html">theory.string.instructions</a></li><li><a href="theory.string.ranges.html">theory.string.ranges</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Dec 08 2015 11:32:09 GMT+0000 (GMT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Dec 09 2015 16:05:17 GMT+0000 (GMT)
 </footer>
 
 <script> prettyPrint(); </script>
